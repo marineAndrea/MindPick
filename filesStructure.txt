@@ -1,0 +1,18 @@
+Folder Structure:
+
+|-- client
+|   |-- app
+|   |   |-- config (app.js)
+|   |   |-- controllers
+|   |   |-- directives
+|   |   |-- services
+|   |   |-- models
+|   |   |-- views
+|   |-- styles (styles.css)
+|-- server
+|   |-- config (server.js)
+|   |-- controllers
+|   |-- db
+|   |-- models
+`-- lib
+`-- spec
