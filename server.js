@@ -4,7 +4,8 @@
 var express = require('express'); // call express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var Bear = require('./app/models/bear');
+var User = require('./app/models/user');
+var Article = require('./app/models/article');
 
 
 // SET-UP
@@ -38,74 +39,170 @@ router.get('/', function(req, res) {
     res.json({ message: 'Welcome!' });   
 });
 
-// on routes that end in /bears
+// on routes that end in /user
 // -----------------------------------------------------------------------------
-router.route('/bears') // to handle multiple routes for the same URI
-  // create a bear 
-  // accessed at POST http://localhost:8080/api/bears
+router.route('/users') // to handle multiple routes for the same URI
+  // create a user
+  // accessed at POST http://localhost:8080/api/users
   .post(function(req, res) {      
-    var bear = new Bear();
-    bear.name = req.body.name; // set the bears name (comes from the request)
-    bear.save(function(err) {
+    var user = new User();
+    user.name = req.body.name;
+    user.password = req.body.password;
+    user.interests = req.body.interests;
+    user.picture = req.body.picture;
+    user.email = req.body.email;
+    user.articles = req.body.articles;
+    user.save(function(err) {
       if (err) {
         res.send(err);
       }
-      res.json({ message: 'Bear created!' });
+      res.json({ message: 'User created!' });
     });
   })
 
-  // get all the bears
-  // accessed at GET http://localhost:8080/api/bears
+  // get all the users
+  // accessed at GET http://localhost:8080/api/users
   .get(function(req, res) {
-    Bear.find(function(err, bears) {
+    User.find(function(err, users) {
       if (err) {
         res.send(err);
       }
-      res.json(bears);
+      res.json(users);
     });
   });
 
-router.route('/bears/:bear_id')
-  // get the bear with that id 
-  // accessed at GET http://localhost:8080/api/bears/:bear_id
+router.route('/users/:user_id')
+  // get the user with that id 
+  // accessed at GET http://localhost:8080/api/users/:user_id
   .get(function(req, res) {
-    Bear.findById(req.params.bear_id, function(err, bear) {
+    User.findById(req.params.user_id, function(err, user) {
       if (err) {
         res.send(err);
       }
-      res.json(bear);
+      res.json(user);
     });
   })
 
-  // update the bear with this id 
-  // accessed at PUT http://localhost:8080/api/bears/:bear_id
+  // update the user with this id 
+  // accessed at PUT http://localhost:8080/api/users/:user_id
   .put(function(req, res) {
-    Bear.findById(req.params.bear_id, function(err, bear) {
+    User.findById(req.params.user_id, function(err, user) {
       if (err) {
         res.send(err);
       }
-      bear.name = req.body.name;
-      bear.save(function(err) {
+      user.name = req.body.name;
+      user.password = req.body.password;
+      user.interests = req.body.interests;
+      user.picture = req.body.picture;
+      user.email = req.body.email;
+      user.articles = req.body.articles;
+      user.save(function(err) {
         if (err) {
           res.send(err);
         }
-        res.json({ message: 'Bear updated!' });
+        res.json({ message: 'User updated!' });
       });
     });  
   })
 
-  // delete the bear with this id 
-  // accessed at DELETE http://localhost:8080/api/bears/:bear_id
+  // delete the user with this id 
+  // accessed at DELETE http://localhost:8080/api/user/:user_id
   .delete(function(req, res) {
-    Bear.remove ({
-      _id: req.params.bear_id
-    }, function(err, bear) {
+    User.remove ({
+      _id: req.params.user_id
+    }, function(err, user) {
       if (err) {
         res.send(err);
       }
-      res.json({ message: 'Successfully deleted' });
+      res.json({ message: 'User successfully deleted' });
     });
   });
+
+// on routes that end in /articles
+// -----------------------------------------------------------------------------
+router.route('/articles') // to handle multiple routes for the same URI
+  // create an article
+  // accessed at POST http://localhost:8080/api/articles
+  .post(function(req, res) {      
+    var article = new Article();
+    article.url = req.body.url;
+    article.tags = req.body.tags;
+    article.uploader = req.body.uploader;
+    article.dataloc = req.body.dataloc;
+    article.date = req.body.date;
+    article.comments = req.body.comments;
+    article.commentators = req.body.commentators;
+    article.popularityIdx = req.body.popularityIdx;
+    article.controversyIdx = req.body.controversyIdx;
+    article.save(function(err) {
+      if (err) {
+        res.send(err);
+      }
+      res.json({ message: 'Article created!' });
+    });
+  })
+
+  // get all the articles
+  // accessed at GET http://localhost:8080/api/articles
+  .get(function(req, res) {
+    Article.find(function(err, articles) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(articles);
+    });
+  });
+
+router.route('/articles/:article_id')
+  // get the article with that id 
+  // accessed at GET http://localhost:8080/api/articles/:article_id
+  .get(function(req, res) {
+    Article.findById(req.params.article_id, function(err, article) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(article);
+    });
+  })
+
+  // update the article with this id 
+  // accessed at PUT http://localhost:8080/api/articles/:article_id
+  .put(function(req, res) {
+    Article.findById(req.params.article_id, function(err, article) {
+      if (err) {
+        res.send(err);
+      }
+      article.url = req.body.url;
+      article.tags = req.body.tags;
+      article.uploader = req.body.uploader;
+      article.dataloc = req.body.dataloc;
+      article.date = req.body.date;
+      article.comments = req.body.comments;
+      article.commentators = req.body.commentators;
+      article.popularityIdx = req.body.popularityIdx;
+      article.controversyIdx = req.body.controversyIdx;
+      article.save(function(err) {
+        if (err) {
+          res.send(err);
+        }
+        res.json({ message: 'Article updated!' });
+      });
+    });  
+  })
+
+  // delete the article with this id 
+  // accessed at DELETE http://localhost:8080/api/articles/:article_id
+  .delete(function(req, res) {
+    Article.remove ({
+      _id: req.params.article_id
+    }, function(err, article) {
+      if (err) {
+        res.send(err);
+      }
+      res.json({ message: 'Article successfully deleted' });
+    });
+  });
+
 
 
 // REGISTER ROUTES -------------------------------------------------------------

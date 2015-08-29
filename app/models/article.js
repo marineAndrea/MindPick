@@ -1,8 +1,16 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var AricleSchema = new Schema({
-  name: String
+var ArticleSchema = new Schema({
+  url: String,
+  tags: Array,
+  uploader: String,
+  dataloc: String,
+  date: Date,
+  comments: Array,
+  commentators: Array,
+  popularityIdx: Number,
+  controversyIdx: Number
 });
 
-module.exports = mongoose.model('Bear', BearSchema);
+module.exports = mongoose.model('Article', ArticleSchema);
