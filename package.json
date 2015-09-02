@@ -1,10 +1,16 @@
 {
-  "name": "marine",
+  "name": "thesis",
   "main": "server/server.js",
   "dependencies": {
-    "bower": "^1.4.1",
-    "express": "~4.0.0",
     "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1"
+    "express": "~4.0.0",
+    "morgan": "^1.1.1",
+    "body-parser": "~1.0.1",
+    "bcrypt-nodejs": "0.0.3",
+    "jwt-simple": "^0.2.0",
+    "q": "^1.0.1",
+    "request": "^2.36.0",
+    "passport": "^0.2.0",
+    "passport-local": "^1.0.0"
   }
 }
