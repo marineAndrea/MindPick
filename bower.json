@@ -1,5 +1,5 @@
 {
-  "name": "marine",
+  "name": "thesis",
   "version": "0.0.0",
   "authors": ["Marine"],
   "license": "MIT",
@@ -14,7 +14,6 @@
     "angular-route": "~1.3.16",
     "angular-mocks": "~1.3.16",
     "bootstrap": "~3.3.5",
-    "angular-ui-router": "~0.2.15",
     "underscore": "~1.8.3",
     "d3": "~3.5.6"
   }
