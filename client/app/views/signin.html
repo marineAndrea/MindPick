@@ -1,0 +1,27 @@
+<div class="container">
+  
+  <div class="subcontainer">
+    <nav class="navigation">
+      <ul>
+        <li>
+          <a class="selected" href="#/articles">Articles</a>
+        </li>
+        <li>
+          <a href="#/signup">Sign Up</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="subcontainer">
+    <div class='signin'>
+      <h1>signin</h1>
+      <form name="signinForm" ng-submit='signin()'>
+        <input type='text'placeholder="Username" ng-model='user.username'>
+        <input type="password" placeholder="Password" ng-model='user.password'>
+        <button>signin</button>
+      </form>
+    </div>
+  </div>
+
+</div>

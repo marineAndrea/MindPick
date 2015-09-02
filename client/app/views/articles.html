@@ -1,0 +1,40 @@
+<div class="container">
+  
+  <div class="subcontainer">
+    <nav class="navigation">
+      <ul>
+        <li>
+          <a class="selected" href="#/articles">Articles</a>
+        </li>
+        <li>
+          <a href="#/users/profile">Profile</a>
+        </li>
+        <li>
+          <a href="#/signin">Sign In</a>
+        </li>
+        <li>
+          <a href="#/signup">Sign Up</a>
+        </li>
+        <li>
+          <a href="#/articles">Logout</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="subcontainer">
+    <h1>Articles</h1>
+    <div class="filter">
+      <input type='text' ng-model='search' placeholder='filter' />
+    </div>
+    <div class="articlesList">
+      <div class="article" ng-repeat="article in articles | filter:search"> <!-- add default order by date -->
+        <div class="tags">{{ article.tags }}</div>
+        <div class="url">{{ article.url }}</div>
+        <div class="linkToArticle">
+          <a href="#/article">View Article</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
