@@ -19,16 +19,26 @@ module.exports = {
   newArticle: function (req, res, next) {
     var url = req.body.url;
     // check if valid url
+    var tags = req.body.tags;
+    var uploader = req.body.uploader;
+    var date = new Date();
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    date = monthNames[monthIndex] + ' ' + day + ', ' + year;
+    // reformat date
     var createArticle = Q.nbind(Article.create, Article);
     // check if article already exist
     var newArticle = {
       url: url,
-      tags: ['#me', '#me', '#andme'],
-      uploader: 'uploader', // find username
+      tags: tags,
+      uploader: uploader, // find username
       dataloc: '0', // TODO file system
-      date: 'date', // put real date
-      comments: ['voila'],
-      commentators: ['me'],
+      date: date, // put real date
+      comments: [],
+      commentators: [],
       popularityIdx: 0,
       controversyIdx: 0
     };
