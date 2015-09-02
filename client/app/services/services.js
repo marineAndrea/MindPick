@@ -13,17 +13,17 @@ angular.module('thesis.services', [])
     });
   };
 
-  // var addArticle = function(article) {
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/articles',
-  //     data: article
-  //   });
-  // };
+  var addArticle = function(article) {
+    return $http({
+      method: 'POST',
+      url: '/api/articles',
+      data: article
+    });
+  };
 
   return {
-    getAll: getAll
-    // addArticle: addArticle
+    getAll: getAll,
+    addArticle: addArticle
   };
 })
 
@@ -41,6 +41,7 @@ angular.module('thesis.services', [])
       return resp.data;
     });
   };
+
   return {
     getUsername: getUsername,
     getInfo: getInfo
