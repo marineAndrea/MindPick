@@ -21,13 +21,8 @@ module.exports = {
     // console.log(req.params.username, 'req.params.username');
     var username = req.params.username;
     var findUser = Q.nbind(User.findOne, User);
-    if (!username) {
-      console.log('401');
-      res.send(401);
-    }
     findUser({username: username})
      .then(function(user) {
-      console.log('user', user);
       res.json(user);
      });
   },

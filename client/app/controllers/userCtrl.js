@@ -26,6 +26,7 @@ angular.module('thesis.user', [])
         console.error(error);
       });
     var update = {'article': $scope.article.url};
-    User.updateArticles(update);
+    // User.updateArticles(update);
+    // do not do that have the articles on profile updated by checking article table
   };
 });
