@@ -1,7 +1,6 @@
 angular.module('thesis.articles', [])
 
 .controller('ArticlesCtrl', function ($scope, Articles) {
-  $scope = {};
 
   $scope.getArticles = function() {
     Articles.getAll()
