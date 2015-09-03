@@ -27,7 +27,7 @@ module.exports = {
      });
   },
 
-  updateUserArticles: function(req, res, next) {
+  /*updateUserArticles: function(req, res, next) {
     // use update instead of save??
     console.log('updateUserArticles called');
     var username = req.params.username;
@@ -54,7 +54,7 @@ module.exports = {
       .fail(function(error) {
         next(error);
       });
-  },
+  },*/
 
   signin: function(req, res, next) {
     var username = req.body.username;

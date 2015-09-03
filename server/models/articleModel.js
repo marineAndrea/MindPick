@@ -7,7 +7,7 @@ var ArticleSchema = new mongoose.Schema({
   tags: String, // change to array
   uploader: String,
   dataloc: String,
-  date: String, // put date
+  date: String, // put date ?
   comments: Array,
   commentators: Array,
   popularityIdx: Number,
