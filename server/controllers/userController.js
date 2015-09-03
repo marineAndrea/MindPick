@@ -18,7 +18,7 @@ module.exports = {
   },*/
 
   getUserByUsername: function(req, res, next) {
-    console.log(req.params.username, 'req.params.username');
+    // console.log(req.params.username, 'req.params.username');
     var username = req.params.username;
     var findUser = Q.nbind(User.findOne, User);
     if (!username) {
@@ -30,6 +30,35 @@ module.exports = {
       console.log('user', user);
       res.json(user);
      });
+  },
+
+  updateUserArticles: function(req, res, next) {
+    // use update instead of save??
+    console.log('updateUserArticles called');
+    var username = req.params.username;
+    var article = req.body.article;
+    var findUser = Q.nbind(User.findOne, User);
+    if (!username) {
+      console.log('401');
+      res.send(401);
+    }
+    findUser({username: username})
+      .then(function (user) {
+        if (!user) {
+          next(new Error('User does not exist'));
+        } else {
+          user.articles.push(article);
+          user.save(function (err, thing) {
+            if (err) {
+              return console.error(err);
+            }
+            res.json(thing);
+          });
+        }
+      })
+      .fail(function(error) {
+        next(error);
+      });
   },
 
   signin: function(req, res, next) {

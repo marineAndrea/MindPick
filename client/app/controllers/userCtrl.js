@@ -15,12 +15,8 @@ angular.module('thesis.user', [])
 
   $scope.article = {};
   $scope.addArticle = function() {
-
     var username = User.getUsername();
-    // console.log('username',username);
-    // console.log('adding article');
     $scope.article.uploader = username;
-    console.log('scope', $scope.article);
     Articles.addArticle($scope.article)
       .then(function () {
         $location.path('/users/profile');
@@ -29,5 +25,7 @@ angular.module('thesis.user', [])
       .catch(function (error) {
         console.error(error);
       });
+    var update = {'article': $scope.article.url};
+    User.updateArticles(update);
   };
 });

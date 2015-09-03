@@ -42,7 +42,7 @@ module.exports = {
       popularityIdx: 0,
       controversyIdx: 0
     };
-    console.log('newArticle', newArticle);
+    // console.log('newArticle', newArticle);
     createArticle(newArticle)
       .then(function (createdArticle) {
         if (createdArticle) {

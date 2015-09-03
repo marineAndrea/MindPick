@@ -42,9 +42,19 @@ angular.module('thesis.services', [])
     });
   };
 
+  var updateArticles = function(article) {
+    var username = getUsername();
+    return $http({
+      method: 'PUT',
+      url: '/api/users/' + username,
+      data: article
+    });
+  };
+
   return {
     getUsername: getUsername,
-    getInfo: getInfo
+    getInfo: getInfo,
+    updateArticles: updateArticles
   };
 })
 
