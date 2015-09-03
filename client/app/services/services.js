@@ -43,11 +43,6 @@ angular.module('thesis.services', [])
     });
   };
 
-  /*var getArticles = function() {
-    return $http({
-      method: 'GET'
-    })
-  };*/
   // var updateArticles = function(article) {
   //   var username = getUsername();
   //   return $http({
@@ -60,7 +55,6 @@ angular.module('thesis.services', [])
   return {
     getUsername: getUsername,
     getInfo: getInfo
-    // getArticles: getArticles
     // updateArticles: updateArticles
   };
 })

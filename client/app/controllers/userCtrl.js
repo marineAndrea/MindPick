@@ -1,4 +1,5 @@
 // TODO be consistent with $location.path;
+// Maybe refactor
 
 angular.module('thesis.user', [])
 
@@ -7,7 +8,6 @@ angular.module('thesis.user', [])
     User.getInfo()
       .then(function (info) {
         $scope.user = info;
-        console.log('$scope.user', $scope.user);
       })
       .catch(function (error) {
         console.error(error);
@@ -31,7 +31,32 @@ angular.module('thesis.user', [])
     // User.updateArticles(update);
     // do not do that have the articles on profile updated by checking article table
   };
-  
+
+  $scope.getUploadedArticles = function() {
+    $scope.articlesInfo = [];
+    // get user's articles' ids
+    User.getInfo()
+      .then(function (info) {
+        $scope.articlesIds = info.articles;
+        // get all articles
+        Articles.getAll()
+        // then select only the ones that correspond to user's
+        .then(function (articles) {
+          for (var i = 0; i < articles.length; i++) {
+            if ($scope.articlesIds.indexOf(articles[i]._id) !== -1) {
+              $scope.articlesInfo.push(articles[i]);
+            }
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+  $scope.getUploadedArticles();
   
   /*$scope.getUploadedArticles = function() {
     User.getArticles()
