@@ -38,23 +38,30 @@ angular.module('thesis.services', [])
       url: '/api/users/' + username,
     })
     .then(function (resp) {
+      // console.log('data', resp.data);
       return resp.data;
     });
   };
 
-  var updateArticles = function(article) {
-    var username = getUsername();
+  /*var getArticles = function() {
     return $http({
-      method: 'PUT',
-      url: '/api/users/' + username,
-      data: article
-    });
-  };
+      method: 'GET'
+    })
+  };*/
+  // var updateArticles = function(article) {
+  //   var username = getUsername();
+  //   return $http({
+  //     method: 'PUT',
+  //     url: '/api/users/' + username,
+  //     data: article
+  //   });
+  // };
 
   return {
     getUsername: getUsername,
-    getInfo: getInfo,
-    updateArticles: updateArticles
+    getInfo: getInfo
+    // getArticles: getArticles
+    // updateArticles: updateArticles
   };
 })
 

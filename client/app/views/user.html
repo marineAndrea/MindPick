@@ -53,9 +53,10 @@
     <div class="profileArticles">
       <div class="userArticles" ng-repeat="article in user.articles"> 
         <!-- article.contrIdx, article.popIdx, delete button-->
-        <p class="articleUrl"> {{ article.url }} </p>
+        <p class="articleID"> {{ article }} </p>
+        <!-- <p class="articleUrl"> {{ article.url }} </p>
         <p class="articleDate"> {{ article.date }} </p>
-        <p class="articleTags"> {{ article.tags }} </p>
+        <p class="articleTags"> {{ article.tags }} </p> -->
         <div class="linkToArticle">
           <a href="#/articles">View Article</a>
         </div>

@@ -1,3 +1,5 @@
+// TODO be consistent with $location.path;
+
 angular.module('thesis.user', [])
 
 .controller('UserCtrl', function ($scope, User, Articles, $location) {
@@ -5,7 +7,7 @@ angular.module('thesis.user', [])
     User.getInfo()
       .then(function (info) {
         $scope.user = info;
-        // console.log('$scope.user.username', $scope.user.username);
+        console.log('$scope.user', $scope.user);
       })
       .catch(function (error) {
         console.error(error);
@@ -25,8 +27,21 @@ angular.module('thesis.user', [])
       .catch(function (error) {
         console.error(error);
       });
-    var update = {'article': $scope.article.url};
+    // var update = {'article': $scope.article.url};
     // User.updateArticles(update);
     // do not do that have the articles on profile updated by checking article table
   };
+  
+  
+  /*$scope.getUploadedArticles = function() {
+    User.getArticles()
+      .then(function (articles) {
+        $scope.articles = articles;
+        console.log('$scope.articles', $scope.articles);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };*/
+
 });
