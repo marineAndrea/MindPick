@@ -21,11 +21,31 @@ angular.module('thesis.services', [])
     });
   };
 
+  var addComment = function(comment) {
+    console.log('add comment called');
+    return $http({
+      method:'PUT',
+      url: 'api/document',
+      data: comment
+    });
+  };
+
   return {
     getAll: getAll,
-    addArticle: addArticle
+    addArticle: addArticle,
+    addComment: addComment
   };
 })
+
+/*.factory('Document', function ($http) {
+  var commentArticle = function() {
+
+  };
+
+  return {
+    commentArticle:commentArticle
+  };
+})*/
 
 .factory('User', function ($http, $window) {
   var getUsername = function() {
@@ -43,19 +63,9 @@ angular.module('thesis.services', [])
     });
   };
 
-  // var updateArticles = function(article) {
-  //   var username = getUsername();
-  //   return $http({
-  //     method: 'PUT',
-  //     url: '/api/users/' + username,
-  //     data: article
-  //   });
-  // };
-
   return {
     getUsername: getUsername,
     getInfo: getInfo
-    // updateArticles: updateArticles
   };
 })
 
