@@ -23,7 +23,7 @@ angular.module('thesis', [
       templateUrl: 'app/views/articles.html',
       controller: 'ArticlesCtrl',
     })
-    .when('/document', {
+    .when('/document/:id', {
       templateUrl: 'app/views/document.html',
       controller: 'DocumentCtrl',
       authenticate: true

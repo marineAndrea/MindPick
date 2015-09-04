@@ -10,16 +10,14 @@ angular.module('thesis.document', [])
   $scope.comment = {};
   $scope.commentArticle = function() {
     // get article ID
-    var articleId = "55e8a844e5f7b20000000006";
+    var articleId = $location.url().slice(10);
     $scope.comment.articleId = articleId;
     // get username
     var username = User.getUsername();
     $scope.comment.username = username;
-    
     // send comment.opinion to server
     Articles.addComment($scope.comment)
       .then(function (articles) {
-        $location.path('/document');
         $scope.comment = null;
       })
       .catch(function(err) {

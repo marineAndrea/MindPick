@@ -21,6 +21,10 @@ angular.module('thesis.services', [])
     });
   };
 
+  var getArticleId = function() {
+
+  };
+
   var addComment = function(comment) {
     return $http({
       method:'PUT',
@@ -35,16 +39,6 @@ angular.module('thesis.services', [])
     addComment: addComment
   };
 })
-
-/*.factory('Document', function ($http) {
-  var commentArticle = function() {
-
-  };
-
-  return {
-    commentArticle:commentArticle
-  };
-})*/
 
 .factory('User', function ($http, $window) {
   var getUsername = function() {

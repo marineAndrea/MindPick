@@ -71,7 +71,8 @@
         <td>{{ article.tags }}</td>
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversyIdx }}</td>
-        <td><a href="#/document">View Article</a></td> <!-- make links -->
+        <td>{{ article._id }}</td>
+        <td><a ng-href="#/document/{{article._id}}">View Article</a></td> <!-- make links -->
       </tr>
     </table>
 
