@@ -1,0 +1,52 @@
+<div class="container">
+  
+  <div class="subcontainer">
+    <nav class="navigation">
+      <ul>
+        <li>
+          <a class="selected" href="#/articles">Articles</a>
+        </li>
+        <li>
+          <a href="#/users/profile">Profile</a>
+        </li>
+        <li>
+          <a href="#/signin">Sign In</a>
+        </li>
+        <li>
+          <a href="#/signup">Sign Up</a>
+        </li>
+        <li>
+          <a href="#/articles">Logout</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+  <div class="subcontainer">
+    <div class="docNav">
+      <ul>
+        <li ng-click="toggleCommentArticle()">Comment Article</li>
+        <!-- <li ng-click="toggleArticleStats()">View Article Stats</li>
+        <li ng-click="toggleRelatedArticles()">View Related Articles</li> -->
+      </ul>
+    </div>
+    <div class="document">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+    </div>
+  </div>
+
+  <div class="subcontainer">
+    <div class="commentArticle" ng-show="enableComment"> <!-- make it a table? -->
+      <form name="commentArticleForm" ng-submit="commentArticle()">
+        <input type="text" placeholder="Opinion" ng-model="comment.opinion">
+        <input type="text" placeholder="Source" ng-model="comment.source">
+        <button>Add Comment</button>
+      </form>
+    </div>
+  </div>
+
+</div>
