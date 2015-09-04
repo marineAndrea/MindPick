@@ -16,7 +16,13 @@ module.exports = {
           next(new Error('Article does not exist'));
         } else {
           article.comments.push(opinion);
-          article.commentators.push(commentator);
+          // push commentator only if he/she has not already commented the document
+          if (article.commentators.indexOf(commentator) === -1) {
+            article.commentators.push(commentator);
+          } else {
+            console.log('commentator has already commented on article');
+            // do nothing
+          }
           article.save(function (err, comment) {
             if (err) {
               return console.error(err);
