@@ -18,11 +18,31 @@ angular.module('thesis.user', [])
   $scope.article = {};
   $scope.addArticle = function() {
     var username = User.getUsername();
-    $scope.article.uploader = username;
-    Articles.addArticle($scope.article)
-      .then(function () {
-        $location.path('/users/profile');
-        $scope.article = null;
+    var url = $scope.article.url;
+    var alreadyUploaded = false;
+    // check if article already in db
+    Articles.getAll()
+      .then(function (articles) {
+        for (var i = 0; i < articles.length; i++) {
+          if (articles[i].url === url) {
+            alreadyUploaded = true;
+          }
+        }
+        // add article only if not in db
+        if (!alreadyUploaded) {
+          $scope.article.uploader = username;
+          Articles.addArticle($scope.article)
+            .then(function () {
+              // $location.path('/users/profile'); redirect to document?
+              $scope.article = null;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        } else {
+          // message user that article already in database
+          $scope.article = null;
+        }
       })
       .catch(function (error) {
         console.error(error);
@@ -30,10 +50,12 @@ angular.module('thesis.user', [])
   };
 
   $scope.getUploadedArticles = function() {
+    var uploaded, commented, username;
     $scope.articlesInfo = [];
     // get user's articles' ids
     User.getInfo()
       .then(function (info) {
+        username = info.username;
         $scope.articlesIds = info.articles;
         // get all articles
         Articles.getAll()
@@ -41,6 +63,12 @@ angular.module('thesis.user', [])
         .then(function (articles) {
           for (var i = 0; i < articles.length; i++) {
             if ($scope.articlesIds.indexOf(articles[i]._id) !== -1) {
+              // see if uploader
+              uploaded = (articles[i].uploader === username);
+              articles[i].uploaded = uploaded ? 'yes' : 'no';
+              // see if commentator
+              commented = (articles[i].commentators.indexOf(username) !== -1);
+              articles[i].commented = commented ? 'yes' : 'no';
               $scope.articlesInfo.push(articles[i]);
             }
           }

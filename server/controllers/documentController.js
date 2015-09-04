@@ -4,7 +4,6 @@ var Q = require('q');
 
 module.exports = {
   updateArticle: function(req, res, nex) {
-    // add user id of commentator
     
     var opinion = req.body;
     var articleId = req.body.articleId;
@@ -27,7 +26,33 @@ module.exports = {
           });
         }
       })
-      .fail (function (error) {
+      .fail(function (error) {
+        next(error);
+      });
+
+    // add article id to user db
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: commentator})
+      .then (function (user) {
+        if (!user) {
+          next(new Error('User does not exist'));
+        } else {
+          // check if article has already been pushed
+          if (user.articles.indexOf(articleId) === -1) {
+            user.articles.push(articleId);
+            user.save(function (err, id) {  // should u use id? and be consistent
+              if (err) {
+                return console.error(err);
+              } else {
+                res.json(id);
+              }
+            });
+          } else {
+            // document already in user's articles
+          }
+        }
+      })
+      .fail(function (error) {
         next(error);
       });
   }

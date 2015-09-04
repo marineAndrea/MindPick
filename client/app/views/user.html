@@ -51,6 +51,10 @@
     <!-- add default chronological order -->
     <label>Tags: <input ng-model='search.tags'>
     </label><br>
+    <label>Uploaded: <input ng-model='search.uploaded'> <!-- make it yes/no options -->
+    </label><br>
+    <label>Commented: <input ng-model='search.commented'> <!-- make it yes/no options -->
+    </label><br>
     <label>Popularity: <input ng-model='search.popularityIdx'>
     </label><br>
     <label>Controversial: <input ng-model='search.controversyIdx'>
@@ -62,6 +66,8 @@
       <tr>
         <th>Date</th>
         <th>Tags</th>
+        <!-- <th>Uploaded</th>
+        <th>Commented</th> -->
         <th>Popularity</th>
         <th>Controversial</th>
         <th>Link</th>
@@ -69,9 +75,11 @@
       <tr ng-repeat='article in articlesInfo | filter:search:strict'>
         <td>{{ article.date }}</td>
         <td>{{ article.tags }}</td>
+        <!-- <td>{{ article.uploaded }}</td>
+        <td>{{ article.commented }}</td> -->
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversyIdx }}</td>
-        <td>{{ article._id }}</td>
+        <!-- <td>{{ article._id }}</td> -->
         <td><a ng-href="#/document/{{article._id}}">View Article</a></td> <!-- make links -->
       </tr>
     </table>
