@@ -5,10 +5,10 @@ var Q = require('q');
 module.exports = {
   updateArticle: function(req, res, nex) {
     // add user id of commentator
-    console.log('updatearticle called');
     
     var opinion = req.body;
     var articleId = req.body.articleId;
+    var commentator = req.body.username;
 
     var findArticle = Q.nbind(Article.findOne, Article);
     findArticle({_id: articleId})
@@ -17,6 +17,7 @@ module.exports = {
           next(new Error('Article does not exist'));
         } else {
           article.comments.push(opinion);
+          article.commentators.push(commentator);
           article.save(function (err, comment) {
             if (err) {
               return console.error(err);

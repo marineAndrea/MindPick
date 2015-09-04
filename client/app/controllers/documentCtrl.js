@@ -24,7 +24,10 @@ angular.module('thesis.document', [])
         console.error(err);
       });
 
+    // add commentator to article
+    // $scope.comment.username
 
+    
     // create new article with comment.source
   };
 
