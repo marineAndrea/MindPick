@@ -1,7 +1,7 @@
 angular.module('thesis', [
   'thesis.services',
   'thesis.articles',
-  'thesis.article',
+  'thesis.document',
   'thesis.user',
   'thesis.auth',
   'ngRoute'
@@ -23,9 +23,9 @@ angular.module('thesis', [
       templateUrl: 'app/views/articles.html',
       controller: 'ArticlesCtrl',
     })
-    .when('/article', {
-      templateUrl: 'app/views/article.html',
-      controller: 'ArticleCtrl',
+    .when('/document', {
+      templateUrl: 'app/views/document.html',
+      controller: 'DocumentCtrl',
       authenticate: true
     })
     .when('/users/profile', {
