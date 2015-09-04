@@ -27,9 +27,6 @@ angular.module('thesis.user', [])
       .catch(function (error) {
         console.error(error);
       });
-    // var update = {'article': $scope.article.url};
-    // User.updateArticles(update);
-    // do not do that have the articles on profile updated by checking article table
   };
 
   $scope.getUploadedArticles = function() {
@@ -57,16 +54,5 @@ angular.module('thesis.user', [])
       });
   };
   $scope.getUploadedArticles();
-  
-  /*$scope.getUploadedArticles = function() {
-    User.getArticles()
-      .then(function (articles) {
-        $scope.articles = articles;
-        console.log('$scope.articles', $scope.articles);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };*/
 
 });
