@@ -42,7 +42,11 @@
   <div class="subcontainer">
     <div class="commentArticle" ng-show="enableComment"> <!-- make it a table? -->
       <form name="commentArticleForm" ng-submit="commentArticle()">
-        <input type="text" placeholder="Opinion" ng-model="comment.opinion">
+        <label for="selectOpinion">Opinion:</label><br>
+        <select name="selectOpinion" ng-model="comment.opinion">
+          <option value="supported">Supported (by):</option>
+          <option value="notSupported">Not Supported (by):</option>
+        </select><br>
         <input type="text" placeholder="Source" ng-model="comment.source">
         <button>Add Comment</button>
       </form>
