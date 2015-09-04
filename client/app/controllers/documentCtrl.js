@@ -1,6 +1,6 @@
 angular.module('thesis.document', [])
 
-.controller('DocumentCtrl', function ($scope, Articles, $location) {
+.controller('DocumentCtrl', function ($scope, Articles, User, $location) {
   
   $scope.enableComment = false;
   $scope.toggleCommentArticle = function() {
@@ -12,13 +12,15 @@ angular.module('thesis.document', [])
     // get article ID
     var articleId = "55e8a844e5f7b20000000006";
     $scope.comment.articleId = articleId;
-
-    // add comment to article's comments in db with comment.opinion
+    // get username
+    var username = User.getUsername();
+    $scope.comment.username = username;
     
+    // send comment.opinion to server
     Articles.addComment($scope.comment)
       .then(function (articles) {
         $location.path('/document');
-        $scope.article = null;
+        $scope.comment = null;
       })
       .catch(function(err) {
         console.error(err);
