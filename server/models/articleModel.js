@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var ArticleSchema = new mongoose.Schema({
   url: String,
   tags: String, // change to array
-  uploader: String,
+  uploaders: Array,
   dataloc: String,
   date: String, // put date ?
   comments: Array,
