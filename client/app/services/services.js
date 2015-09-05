@@ -21,8 +21,13 @@ angular.module('thesis.services', [])
     });
   };
 
-  var getArticleId = function() {
-
+  var addUploader = function(uploader, articleId) {
+    console.log('addUploader called');
+    return $http({
+      method: 'PUT',
+      url: 'api/articles',
+      data: {'uploader': uploader, 'articleId': articleId}
+    });
   };
 
   var addComment = function(comment) {
@@ -36,7 +41,8 @@ angular.module('thesis.services', [])
   return {
     getAll: getAll,
     addArticle: addArticle,
-    addComment: addComment
+    addComment: addComment,
+    addUploader: addUploader
   };
 })
 

@@ -20,12 +20,14 @@ angular.module('thesis.user', [])
     var username = User.getUsername();
     var url = $scope.article.url;
     var alreadyUploaded = false;
+    var articleId;
     // check if article already in db
     Articles.getAll()
       .then(function (articles) {
         for (var i = 0; i < articles.length; i++) {
           if (articles[i].url === url) {
             alreadyUploaded = true;
+            articleId = articles[i]._id; // why as opposed to articleController l53 returns 2q33523454 intead of {"oid: 3456435756474"}?!!
           }
         }
         // add article only if not in db
@@ -41,7 +43,14 @@ angular.module('thesis.user', [])
             });
         } else {
           // message user that article already in database
-          $scope.article = null;
+          // update article by adding username to uploaders
+          Articles.addUploader(username, articleId)
+            .then(function () {
+              $scope.article = null;
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
         }
       })
       .catch(function (error) {

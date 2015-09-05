@@ -38,7 +38,7 @@ module.exports = {
     var newArticle = {
       url: url,
       tags: tags,
-      uploader: uploader,
+      uploaders: [uploader],
       dataloc: '0', // TODO file system
       date: date,
       comments: [],
@@ -51,7 +51,7 @@ module.exports = {
       // then get article's ID and uploader's username
       .then(function (createdArticle) {
         var id = createdArticle._id;
-        var uploader = createdArticle.uploader;
+        var uploader = createdArticle.uploaders[0];
         // and save article's ID into Users table
         var findUser = Q.nbind(User.findOne, User);
         findUser({username: uploader})
@@ -80,6 +80,65 @@ module.exports = {
       .fail(function (error) {
         next(error);
       });
+  },
+
+  updateUploaders: function(req, res, next) {
+    var uploader = req.body.uploader;
+    var articleId = req.body.articleId;
+    
+    var findArticle = Q.nbind(Article.findOne, Article);
+    
+    findArticle({_id: articleId})
+      .then(function (article) {
+        // add username to article uploaders if not present already
+        if (article.uploaders.indexOf(uploader) === -1) {
+          article.uploaders.push(uploader);
+          article.save(function (err, uploader) {
+            if (err) {
+              return console.error(err);
+            } else {
+              res.json(uploader);
+            }
+          });
+        } else {
+          // do not push
+          // alert user that he has already uploaded the article
+          console.log('uploader already in article table');
+        }
+
+        // add article ID to user db
+        var findUser = Q.nbind(User.findOne, User);
+        findUser({username: uploader})
+          .then(function (user) {
+            if (!user) {
+              next(new Error('User does not exist'));
+            } else {
+              // if article not already there
+              if (user.articles.indexOf(articleId) === -1) {
+                user.articles.push(articleId); // pushing just id instead of {oid: 2342345}
+                user.save(function (err, id) {
+                  if (err) {
+                    return console.error(err);
+                  } else {
+                    res.json(id);
+                  }
+                });
+              } else {
+                // do not push
+                // alert user that he has already uploaded the article
+                console.log('user has already uploaded this article');
+              } 
+            }
+          })
+          .fail (function (error) {
+            next(error);
+          });
+      })
+      .fail (function (error) {
+        next(error);
+      });
   }
 
 };
+
+
