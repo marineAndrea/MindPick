@@ -1,5 +1,4 @@
 // TODO be consistent with $location.path;
-// Maybe refactor
 
 angular.module('thesis.user', [])
 
@@ -10,7 +9,7 @@ angular.module('thesis.user', [])
         $scope.user = info;
       })
       .catch(function (error) {
-        console.error(error);
+        console.log("oops cannot get user's info");
       });
   };
   $scope.getUserInfo();
@@ -26,16 +25,19 @@ angular.module('thesis.user', [])
       Articles.uploadArticle($scope.article)
         .then(function() {
           $scope.article = null;
+          // $location.path('/articles');
+          console.log('calling getUserArticles');
+          $scope.getUserArticles();
         })
-        .catch(function (error) { // catch vs fail?
-          console.error(error);
+        .catch(function (error) {
+          console.log("oops cannot upload article");
         });
     } else {
       alert('must provide both url and tags');
     }
   };
 
-  $scope.getUserdArticles = function() {
+  $scope.getUserArticles = function() {
     // get username and user's list of articlesId
     $scope.userArticles = [];
     User.getInfo()
@@ -60,14 +62,15 @@ angular.module('thesis.user', [])
                 }
               }
             }
+            console.log('$scope.userArticles', $scope.userArticles);
           })
           .catch(function (error) {
-            console.error(error);
+            console.log("oops cannot get user's articles");
           });
       })
       .catch(function (error) {
-        console.error(error);
+        console.log("oops cannot get user's info");
       });
   };
-  $scope.getUserdArticles();
+  $scope.getUserArticles();
 });

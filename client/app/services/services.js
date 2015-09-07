@@ -22,7 +22,6 @@ angular.module('thesis.services', [])
   };
 
   var addComment = function(comment) {
-    console.log('comment', comment);
     return $http({
       method:'PUT',
       url: 'api/document',

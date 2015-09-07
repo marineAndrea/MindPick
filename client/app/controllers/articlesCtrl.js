@@ -8,7 +8,7 @@ angular.module('thesis.articles', [])
         $scope.articles = articles;
       })
       .catch(function (error) {
-        console.error(error);
+        console.log("oops articles cannot be accessed");
       });
   };
   $scope.getArticles();

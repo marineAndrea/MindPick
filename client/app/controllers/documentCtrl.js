@@ -22,9 +22,10 @@ angular.module('thesis.document', [])
         Articles.addComment($scope.comment)
           .then(function (articles) {
             $scope.comment = null;
+            $location.path('/users/profile');
           })
           .catch(function(err) {
-            console.error(err);
+            console.log("oops cannot comment article");
           });
       }
     } else {
