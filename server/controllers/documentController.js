@@ -35,18 +35,18 @@ var uploadArticle = function(url, tags, username, next) {
   return findArticle({url: url})
     .then(function (foundArticle) {
       if (!foundArticle) {
-        console.log('article does not already exist in database');
+        console.log("article does not already exist in database");
         return utils.createNewArticle(url, tags);
       } else {
-        console.log('article already exists in database');
+        console.log("article already exists in database");
         return foundArticle;
       }
     })
     .then(function (article) {
-      return utils.updateArticlesTable(article._id, 'uploaders', username, true, next); ///////////Error
+      return utils.updateArticlesTable(article._id, "uploaders", username, true, next); ///////////Error
     })
     .then(function (article) {
-      return utils.updateUsersTable(username, 'articles', article._id, true, next); ///////////Error
+      return utils.updateUsersTable(username, "articles", article._id, true, next); ///////////Error
     })
     .catch(function (error) { //Error
       next(error);
@@ -88,31 +88,31 @@ module.exports = {
         comment = createComment(username, articleId, opinion, source);
         belief = createBelief(articleId, opinion, source, articleContrIdx);
         if (opinion !== "interesting") {
-          console.log('opninon provided', opinion);
-          return utils.updateUsersTable(username, 'beliefs', belief, false, next); ///////////Error
+          console.log("opninon provided", opinion);
+          return utils.updateUsersTable(username, "beliefs", belief, false, next); ///////////Error
           // returns a user
         } else {
-          console.log('no opinion provided');
+          console.log("no opinion provided");
         }
       })
       .then(function (user) {
         if (source) {
-          console.log('source provided', source);
+          console.log("source provided", source);
           return uploadArticle(url, tags, username, next);
           // returns a user
         } else {
-          console.log('no source provided');
+          console.log("no source provided");
           return user;
         }
       })
       .then(function (user) {
-        return utils.updateArticlesTable(articleId, 'comments', comment, false, next);
+        return utils.updateArticlesTable(articleId, "comments", comment, false, next);
       })
       .then(function (article) {
-        return utils.updateArticlesTable(articleId, 'commentators', username, true, next);
+        return utils.updateArticlesTable(articleId, "commentators", username, true, next);
       })
       .then(function (article) {
-        return utils.updateUsersTable(username, 'articles', articleId, true, next);
+        return utils.updateUsersTable(username, "articles", articleId, true, next);
       })
       .then(function (user) {
         if (!user) {

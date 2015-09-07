@@ -37,18 +37,18 @@ module.exports = {
     findArticle({url: url})
       .then(function (foundArticle) {
         if (!foundArticle) {
-          console.log('article does not already exist in database');
+          console.log("article does not already exist in database");
           return utils.createNewArticle(url, tags);
         } else {
-          console.log('article already exists in database');
+          console.log("article already exists in database");
           return foundArticle;
         }
       })
       .then(function (article) {
-        return utils.updateArticlesTable(article._id, 'uploaders', username, true, next); ///////////Error
+        return utils.updateArticlesTable(article._id, "uploaders", username, true, next); ///////////Error
       })
       .then(function (article) {
-        return utils.updateUsersTable(username, 'articles', article._id, true, next); ///////////Error
+        return utils.updateUsersTable(username, "articles", article._id, true, next); ///////////Error
       })
       .then(function (user) {
         if (!user) {

@@ -16,7 +16,7 @@ var dateGenerator =  function() {
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
-  date = monthNames[monthIndex] + ' ' + day + ', ' + year;
+  date = monthNames[monthIndex] + " " + day + ", " + year;
   return date;
 };
 
@@ -24,7 +24,7 @@ var dateGenerator =  function() {
 module.exports = {
 
   updateUsersTable: function(identifier, field, item, check) {
-    console.log('updateUsersTable called with ', identifier, field, item, check);
+    console.log("updateUsersTable called with ", identifier, field, item, check);
     var findUser = Q.nbind(User.findOne, User);
     findUser({username: identifier})
       .then(function (user) {
@@ -43,7 +43,7 @@ module.exports = {
             if (err) {
               throw err;
             } else {
-              console.log('user saved');
+              console.log("user saved");
             }
           });
         }
@@ -51,12 +51,12 @@ module.exports = {
   },
 
   updateArticlesTable: function(identifier, field, item, check) {
-    console.log('updateArticlesTable called with ', identifier, field, item, check);
+    console.log("updateArticlesTable called with ", identifier, field, item, check);
     var findArticle = Q.nbind(Article.findOne, Article);
     findArticle({_id: identifier})
       .then(function (article) {
         if (!article) {
-          console.log("user does not exist");
+          console.log("article does not exist");
           throw err;
         } else {
           if (check) {
@@ -70,7 +70,7 @@ module.exports = {
             if (err) {
               throw err;
             } else {
-              console.log('article saved');
+              console.log("article saved");
             }
           });
         }
@@ -79,7 +79,6 @@ module.exports = {
 
   createNewArticle: function(url, tags) {
     // create new article
-    console.log('createNewArticle called');
     var createArticle = Q.nbind(Article.create, Article);
     var date = dateGenerator();
     var articleId;

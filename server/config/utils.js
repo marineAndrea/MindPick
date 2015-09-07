@@ -16,7 +16,7 @@ var dateGenerator =  function() {
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
-  date = monthNames[monthIndex] + ' ' + day + ', ' + year;
+  date = monthNames[monthIndex] + " " + day + ", " + year;
   return date;
 };
 
@@ -24,7 +24,6 @@ var dateGenerator =  function() {
 module.exports = {
 
   updateUsersTable: function(identifier, field, item, check, next) {
-    console.log('updateUsersTable called with ', identifier, field, item, check);
     return User.findOne({username: identifier})
       .exec(function (err, user) { ///////////read about exec
         if (err) next(err); ///////////Error
@@ -44,7 +43,6 @@ module.exports = {
   },
 
   updateArticlesTable: function(identifier, field, item, check, next) {
-    console.log('updateArticlesTable called with ', identifier, field, item, check);
     return Article.findOne({_id: identifier})
       .exec(function (err, article) {
         if (err) next(err); ///////////Error
@@ -92,7 +90,6 @@ module.exports = {
 
   createNewArticle: function(url, tags) {
     // create new article
-    console.log('createNewArticle called');
     var createArticle = Q.nbind(Article.create, Article);
     var date = dateGenerator();
     var articleId;
