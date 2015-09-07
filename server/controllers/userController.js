@@ -1,4 +1,4 @@
-// TODO be consistent with sent err
+// TODO be consistent with err
 
 var User = require('../models/userModel.js');
 var Q = require('q');
@@ -18,7 +18,6 @@ module.exports = {
       .fail(function (error) {
         next(error);
       });
-    return;
   },
 
   signin: function(req, res, next) {
