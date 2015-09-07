@@ -2,7 +2,15 @@
 
 angular.module('thesis.services', [])
 
-.factory('Articles', function ($http) {
+.factory('Articles', function ($http) { 
+  var uploadArticle = function(article) {
+    return $http({
+      method: 'POST',
+      url: '/api/articles',
+      data: article
+    });
+  };
+
   var getAll = function() {
     return $http({
       method: 'GET',
@@ -13,24 +21,8 @@ angular.module('thesis.services', [])
     });
   };
 
-  var addArticle = function(article) {
-    return $http({
-      method: 'POST',
-      url: '/api/articles',
-      data: article
-    });
-  };
-
-  var addUploader = function(uploader, articleId) {
-    console.log('addUploader called');
-    return $http({
-      method: 'PUT',
-      url: 'api/articles',
-      data: {'uploader': uploader, 'articleId': articleId}
-    });
-  };
-
   var addComment = function(comment) {
+    console.log('comment', comment);
     return $http({
       method:'PUT',
       url: 'api/document',
@@ -39,10 +31,9 @@ angular.module('thesis.services', [])
   };
 
   return {
+    uploadArticle: uploadArticle,
     getAll: getAll,
-    addArticle: addArticle,
-    addComment: addComment,
-    addUploader: addUploader
+    addComment: addComment
   };
 })
 
@@ -50,6 +41,7 @@ angular.module('thesis.services', [])
   var getUsername = function() {
     return $window.localStorage.getItem('com.thesis.username'); // || User?
   };
+
   var getInfo = function() {
     var username = getUsername();
     return $http({
@@ -57,7 +49,6 @@ angular.module('thesis.services', [])
       url: '/api/users/' + username,
     })
     .then(function (resp) {
-      // console.log('data', resp.data);
       return resp.data;
     });
   };

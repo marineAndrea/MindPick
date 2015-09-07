@@ -18,7 +18,8 @@ var UserSchema = new mongoose.Schema({
   interests: String, // make array
   picture: String,
   email: String,
-  articles: Array
+  articles: Array,
+  beliefs: Array,
 });
 
 

@@ -4,6 +4,7 @@
 var Article = require('../models/articleModel.js');
 var User = require('../models/userModel.js');
 var Q = require('q');
+var utils = require('../config/utils.js');
 
 module.exports = {
   allArticles: function(req, res, next) {
@@ -18,127 +19,38 @@ module.exports = {
     });
   },
 
-  newArticle: function (req, res, next) {
+  uploadArticle: function(req, res, next) {
+    // unable upload article if no url and no tags provided
+
+    // if article does not exist
+    //   CREATE NEW ARTICLE
+    // in any case
+    // UPDATE ARTICLEUPLOADERS
+    // UPDATE USERSARTICLES
     var url = req.body.url;
-    // TODO check if valid url
     var tags = req.body.tags;
-    var uploader = req.body.uploader;
-
-    var date = new Date();
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
-    var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
-    date = monthNames[monthIndex] + ' ' + day + ', ' + year;
-
-    // create new article
-    var createArticle = Q.nbind(Article.create, Article);
-    // TODO check if article already exist
-    var newArticle = {
-      url: url,
-      tags: tags,
-      uploaders: [uploader],
-      dataloc: '0', // TODO file system
-      date: date,
-      comments: [],
-      commentators: [],
-      popularityIdx: 0,
-      controversyIdx: 0
-    };
-    // save article into Articles table
-    createArticle(newArticle)
-      // then get article's ID and uploader's username
-      .then(function (createdArticle) {
-        var id = createdArticle._id;
-        var uploader = createdArticle.uploaders[0];
-        // and save article's ID into Users table
-        var findUser = Q.nbind(User.findOne, User);
-        findUser({username: uploader})
-          .then(function (user) {
-            if (!user) {
-              next(new Error('User does not exist'));
-            } else {
-              // console.log('id', id);
-              user.articles.push(id);
-              user.save(function (err, id) {
-                if (err) {
-                  return console.error(err);
-                } else {
-                  res.json(id);
-                }
-              });
-            }
-          })
-          .fail (function (error) {
-            next(error);
-          });
-        if (createdArticle) {
-          res.json(createdArticle);
-        }
-      })
-      .fail(function (error) {
-        next(error);
-      });
-  },
-
-  updateUploaders: function(req, res, next) {
-    var uploader = req.body.uploader;
-    var articleId = req.body.articleId;
-    
+    var username = req.body.username;
+    // check if article exists already
     var findArticle = Q.nbind(Article.findOne, Article);
-    
-    findArticle({_id: articleId})
-      .then(function (article) {
-        // add username to article uploaders if not present already
-        if (article.uploaders.indexOf(uploader) === -1) {
-          article.uploaders.push(uploader);
-          article.save(function (err, uploader) {
-            if (err) {
-              return console.error(err);
-            } else {
-              res.json(uploader);
-            }
-          });
+    findArticle({url: url})
+      .then(function (foundArticle) {
+        if (!foundArticle) {
+          console.log('article does not already exist in database');
+          return utils.createNewArticle(url, tags); //returns a promise
         } else {
-          // do not push
-          // alert user that he has already uploaded the article
-          console.log('uploader already in article table');
+          console.log('article already exists in database');
+          return foundArticle; // not a promise !!!!!!!!!!!!!
         }
-
-        // add article ID to user db
-        var findUser = Q.nbind(User.findOne, User);
-        findUser({username: uploader})
-          .then(function (user) {
-            if (!user) {
-              next(new Error('User does not exist'));
-            } else {
-              // if article not already there
-              if (user.articles.indexOf(articleId) === -1) {
-                user.articles.push(articleId); // pushing just id instead of {oid: 2342345}
-                user.save(function (err, id) {
-                  if (err) {
-                    return console.error(err);
-                  } else {
-                    res.json(id);
-                  }
-                });
-              } else {
-                // do not push
-                // alert user that he has already uploaded the article
-                console.log('user has already uploaded this article');
-              } 
-            }
-          })
-          .fail (function (error) {
-            next(error);
-          });
       })
-      .fail (function (error) {
-        next(error);
+      .then(function (article) {
+        utils.updateArticlesTable(article._id, 'uploaders', username, true);
+        utils.updateUsersTable(username, 'articles', article._id, true);
+        res.json();
+      })
+      .catch(function (error) {
+        console.error(error);
       });
   }
-
 };
 
 

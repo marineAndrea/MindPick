@@ -37,7 +37,7 @@
 
   <div class="subcontainer">
     <div class="uploadArticle">
-      <form name="uploadArticleForm" ng-submit='addArticle()'>
+      <form name="uploadArticleForm" ng-submit="uploadArticle()">
         <input type="text" placeholder="Url" ng-model='article.url'>
         <input type="text" placeholder="Tags" ng-model='article.tags'>
         <button>Upload Article</button>
@@ -65,18 +65,20 @@
     <table class="profileArticlesTable">
       <tr>
         <th>Date</th>
+        <th>Url</th>
         <th>Tags</th>
-        <!-- <th>Uploaded</th>
-        <th>Commented</th> -->
+        <th>Uploaded</th>
+        <th>Commented</th>
         <th>Popularity</th>
         <th>Controversial</th>
         <th>Link</th>
       </tr>
-      <tr ng-repeat='article in articlesInfo | filter:search:strict'>
+      <tr ng-repeat='article in userArticles | filter:search:strict'>
         <td>{{ article.date }}</td>
+        <td>{{ article.url }}</td>
         <td>{{ article.tags }}</td>
-        <!-- <td>{{ article.uploaded }}</td>
-        <td>{{ article.commented }}</td> -->
+        <td>{{ article.uploaded }}</td>
+        <td>{{ article.commented }}</td>
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversyIdx }}</td>
         <!-- <td>{{ article._id }}</td> -->

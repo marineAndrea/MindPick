@@ -3,58 +3,23 @@
 var User = require('../models/userModel.js');
 var Q = require('q');
 var jwt = require('jwt-simple');
+var utils = require('../config/utils.js');
 
 module.exports = {
-  /*allUsers: function(req, res, next) {
-  var findAll = Q.nbind(User.find, User);
-
-  findAll({})
-    .then(function (users) {
-      res.json(users);
-    })
-    .fail(function (error) {
-      next(error);
-    });
-  },*/
-
+  
   getUserByUsername: function(req, res, next) {
     // console.log(req.params.username, 'req.params.username');
     var username = req.params.username;
     var findUser = Q.nbind(User.findOne, User);
     findUser({username: username})
-     .then(function(user) {
-      res.json(user);
-     });
-  },
-
-  /*updateUserArticles: function(req, res, next) {
-    // use update instead of save??
-    console.log('updateUserArticles called');
-    var username = req.params.username;
-    var article = req.body.article;
-    var findUser = Q.nbind(User.findOne, User);
-    if (!username) {
-      console.log('401');
-      res.send(401);
-    }
-    findUser({username: username})
-      .then(function (user) {
-        if (!user) {
-          next(new Error('User does not exist'));
-        } else {
-          user.articles.push(article);
-          user.save(function (err, thing) {
-            if (err) {
-              return console.error(err);
-            }
-            res.json(thing);
-          });
-        }
+      .then(function(user) {
+        res.json(user);
       })
-      .fail(function(error) {
+      .fail(function (error) {
         next(error);
       });
-  },*/
+    return;
+  },
 
   signin: function(req, res, next) {
     var username = req.body.username;

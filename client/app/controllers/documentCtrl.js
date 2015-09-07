@@ -8,27 +8,28 @@ angular.module('thesis.document', [])
   };
 
   $scope.comment = {};
-  $scope.commentArticle = function() {
-    // get article ID
-    var articleId = $location.url().slice(10);
-    $scope.comment.articleId = articleId;
-    // get username
-    var username = User.getUsername();
-    $scope.comment.username = username;
-    // send comment.opinion to server
-    Articles.addComment($scope.comment)
-      .then(function (articles) {
-        $scope.comment = null;
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
-
-    // add commentator to article
-    // $scope.comment.username
-
-    
-    // create new article with comment.source
+  $scope.commentArticle = function() {    
+    // send request only if an opinion or a source is provided
+    if ($scope.comment.opinion || $scope.comment.source) {
+      // if url but no tags or tags but no url provided alert user
+      if ($scope.comment.source && !($scope.comment.source.url && $scope.comment.source.tags)) {
+        alert('must provide both tags and url');
+      } else {
+        $scope.comment.articleId = $location.url().slice(10);
+        // get username
+        $scope.comment.username = User.getUsername();
+        // send comment.opinion to server
+        Articles.addComment($scope.comment)
+          .then(function (articles) {
+            $scope.comment = null;
+          })
+          .catch(function(err) {
+            console.error(err);
+          });
+      }
+    } else {
+      alert('must provide an opinion or a related source');
+    }
   };
 
 });
