@@ -23,39 +23,56 @@ var dateGenerator =  function() {
 
 module.exports = {
 
-  updateUsersTable: function(identifier, field, item, check) {
+  updateUsersTable: function(identifier, field, item, check, next) {
     console.log('updateUsersTable called with ', identifier, field, item, check);
-    var findUser = Q.nbind(User.findOne, User);
-    findUser({username: identifier})
-      .then(function (user) {
+    return User.findOne({username: identifier})
+      .exec(function (err, user) { ///////////read about exec
+        if (err) next(err); ///////////Error
         if (!user) {
-          next(new Error("user does not exist"));
+          next(err); ///////////Error
         } else {
           if (check) {
             if (alreadyExist(user[field], item)) {
               console.log("" + item + " already in user's " + field);
-              return;
+              return user;
             } 
           }
           user[field].push(item);
-          user.save(function (err) {
-            if (err) {
-              return console.error(err);
-            } else {
-              console.log('user saved');
-            }
-          });
+          return user.save();
         }
       });
   },
 
-  updateArticlesTable: function(identifier, field, item, check) {
+  updateArticlesTable: function(identifier, field, item, check, next) {
+    console.log('updateArticlesTable called with ', identifier, field, item, check);
+    return Article.findOne({_id: identifier})
+      .exec(function (err, article) {
+        if (err) next(err); ///////////Error
+        if (!article) {
+          next(err); ///////////Error
+        } else {
+          if (check) {
+            if (alreadyExist(article[field], item)) {
+              console.log("" + item + " already in article's " + field);
+              return article;
+            }
+          }
+          article[field].push(item);
+          return article.save();
+        }
+      });
+  },
+
+
+  /////////////////////////////   OTHER VERSION WITH Q.NBIND    ///////////////////////////
+
+  /*updateArticlesTable: function(identifier, field, item, check) {
     console.log('updateArticlesTable called with ', identifier, field, item, check);
     var findArticle = Q.nbind(Article.findOne, Article);
-    findArticle({_id: identifier})
+    return findArticle({_id: identifier})
       .then(function (article) {
         if (!article) {
-          next(new Error("article does not exist"));
+          next(err); ///////////Error
         } else {
           if (check) {
             if (alreadyExist(article[field], item)) {
@@ -64,16 +81,14 @@ module.exports = {
             }
           }
           article[field].push(item);
-          article.save(function (err) {
-            if (err) {
-              return console.error(err);
-            } else {
-              console.log('article saved');
-            }
-          });
+          var saveArticle = Q.nbind(article.save, article);
+          return saveArticle();
         }
       });
-  },
+  },*/
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+
 
   createNewArticle: function(url, tags) {
     // create new article
