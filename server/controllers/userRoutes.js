@@ -6,9 +6,6 @@ module.exports = function(app) { // app === userRouter injected from middlware.j
   app.post('/signin', userController.signin);
   app.post('/signup', userController.signup);
   app.get('/signedin', userController.checkAuth);
-  // app.route('/')
-  //   .get(userController.allUsers);
   app.route('/:username')
     .get(userController.getUserByUsername);
-    // .put(userController.updateUserArticles);
 };
