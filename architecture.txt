@@ -1,0 +1,51 @@
+            Upload article from profile:
+
+UPLOAD ARTICLE:
+
+if article does not exist
+
+  CREATE NEW ARTICLE:
+  create new article
+
+in any case
+
+  UPDATE USERSARTICLES
+  update user by pushing article id into articles [] in user table
+
+  UPDATE ARTICLEUPLOADERS:
+  update article by pushing username into uploaders [] in article table
+
+            Comment article from document
+
+COMMENT ARTICLE:
+
+only if opinion provided
+
+  UPDATE USEROPINIONS
+  update user by pushing comment: {articleID, opinion, controversyIdx} into opinions [] in user table
+
+only if source provided
+  UPLOAD ARTICLE
+
+in any case
+  UPDATE ARTICLECOMMENTS (set up default opinion to related)
+  update article by pushing comment {articleID, username, opinion, source} into comments [] in article table
+  UPDATE ARTICLECOMMENTATORS
+  update article by pushing username into commentators [] in article table
+  UPDATE USERARTICLES
+
+
+TEST
+eric
+  upload url1 & 2
+  com supp url3 with source url6 
+  com without opinion url1 with source url2
+minos
+  url2 & 3
+  com supp url1 with source url7
+mike
+  ur1 & 3 & l4
+marine
+  url 5 url7
+  commented url6 with no source // OUPS NOT WORKING WHEN NO URL
+  com notsup url1 with source url2
