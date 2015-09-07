@@ -11,6 +11,7 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true})); // in order to get the data from a POST
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
+  // app.use(function...) error handling should go here
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/articles', articlesRouter);
