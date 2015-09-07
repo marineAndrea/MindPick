@@ -26,7 +26,6 @@ angular.module('thesis.user', [])
         .then(function() {
           $scope.article = null;
           // $location.path('/articles');
-          console.log('calling getUserArticles');
           $scope.getUserArticles();
         })
         .catch(function (error) {
@@ -62,7 +61,6 @@ angular.module('thesis.user', [])
                 }
               }
             }
-            console.log('$scope.userArticles', $scope.userArticles);
           })
           .catch(function (error) {
             console.log("oops cannot get user's articles");
