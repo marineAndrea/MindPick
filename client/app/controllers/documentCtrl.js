@@ -13,7 +13,7 @@ angular.module('thesis.document', [])
     if ($scope.comment.opinion || $scope.comment.source) {
       // if url but no tags or tags but no url provided alert user
       if ($scope.comment.source && !($scope.comment.source.url && $scope.comment.source.tags)) {
-        alert('must provide both tags and url');
+        alert("must provide both tags and url");
       } else {
         $scope.comment.articleId = $location.url().slice(10);
         // get username
@@ -29,7 +29,7 @@ angular.module('thesis.document', [])
           });
       }
     } else {
-      alert('must provide an opinion or a related source');
+      alert("must provide an opinion or a related source");
     }
   };
 

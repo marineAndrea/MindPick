@@ -38,8 +38,8 @@
   <div class="subcontainer">
     <div class="uploadArticle">
       <form name="uploadArticleForm" ng-submit="uploadArticle()">
-        <input type="text" placeholder="Url" ng-model='article.url'>
-        <input type="text" placeholder="Tags" ng-model='article.tags'>
+        <input type="text" placeholder="Url" ng-model="article.url">
+        <input type="text" placeholder="Tags" ng-model="article.tags">
         <button>Upload Article</button>
       </form>
     </div>
@@ -49,17 +49,17 @@
 
     <h1>Articles</h1>
     <!-- add default chronological order -->
-    <label>Tags: <input ng-model='search.tags'>
+    <label>Tags: <input ng-model="search.tags">
     </label><br>
-    <label>Uploaded: <input ng-model='search.uploaded'> <!-- make it yes/no options -->
+    <label>Uploaded: <input ng-model="search.uploaded"> <!-- make it yes/no options -->
     </label><br>
-    <label>Commented: <input ng-model='search.commented'> <!-- make it yes/no options -->
+    <label>Commented: <input ng-model="search.commented"> <!-- make it yes/no options -->
     </label><br>
-    <label>Popularity: <input ng-model='search.popularityIdx'>
+    <label>Popularity: <input ng-model="search.popularityIdx">
     </label><br>
-    <label>Controversial: <input ng-model='search.controversyIdx'>
+    <label>Controversial: <input ng-model="search.controversyIdx">
     </label><br>
-    <label>Date: <input ng-model='search.date'>
+    <label>Date: <input ng-model="search.date">
     </label><br>
     
     <table class="profileArticlesTable">
@@ -73,7 +73,7 @@
         <th>Controversial</th>
         <th>Link</th>
       </tr>
-      <tr ng-repeat='article in userArticles | filter:search:strict'>
+      <tr ng-repeat="article in userArticles | filter:search:strict">
         <td>{{ article.date }}</td>
         <td>{{ article.url }}</td>
         <td>{{ article.tags }}</td>
