@@ -48,9 +48,10 @@ eric
 minos
   upload 2 & 3
   com 1 (supp source 7)
+  com 1 (undef source 2)
 
->> up: 2 3 7
->> com 1
+>> up: 2 3 7 (2 should not be repeated)
+>> com 1 (1 should have one belief)
 
 mike
   upload 1 & 3 & 4
