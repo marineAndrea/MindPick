@@ -37,15 +37,33 @@ in any case
 
 TEST
 eric
-  upload url1 & 2
-  com supp url3 with source url6 
-  com without opinion url1 with source url2
+  upload 1 & 2
+  com 
+    3 (undef source 6)
+    1 (not supp source 2)
+
+>> up: 1 2 6 (2 should not be repeated)
+>> com 3 1
+
 minos
-  url2 & 3
-  com supp url1 with source url7
+  upload 2 & 3
+  com 1 (supp source 7)
+
+>> up: 2 3 7
+>> com 1
+
 mike
-  ur1 & 3 & l4
+  upload 1 & 3 & 4
+
+>> up: 1 3 4
+>> com none
+
 marine
-  url 5 url7
-  commented url6 with no source // OUPS NOT WORKING WHEN NO URL
-  com notsup url1 with source url2
+  com 
+    6 (no op no source) must not work
+    1 (notsup)
+
+>> up none
+>> com 1
+
+
