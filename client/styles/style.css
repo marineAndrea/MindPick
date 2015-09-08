@@ -3,3 +3,7 @@ body {
   margin-top: 10px;
   font-family: arial, sans-serif;
 }
+
+.picture {
+  width: 150px;
+}
