@@ -61,8 +61,8 @@
         <th><a href="" ng-click="order('date')">Date</a></th>
         <th>Url</th>
         <th>Tags</th>
-        <th>Uploaded</th>
-        <th>Commented</th>
+        <!-- <th>Uploaded</th>
+        <th>Commented</th> -->
         <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
         <th><a href="" ng-click="order('-controversyIdx')">Controversial</a></th>
       </tr>
@@ -71,8 +71,8 @@
         <td>{{ article.date }}</td>
         <td><a ng-href="#/document/{{article._id}}">{{ article.url }}</a></td>
         <td>{{ article.tags }}</td>
-        <td>{{ article.uploaded }}</td>
-        <td>{{ article.commented }}</td>
+        <!-- <td>{{ article.uploaded }}</td>
+        <td>{{ article.commented }}</td> -->
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversyIdx }}</td>
       </tr>
