@@ -44,12 +44,6 @@ only if source provided
 
 
 
-
-
-
-
-
-
 GET CONTROVERSY INDEX (article, scale)
 on comment:
   get the nb of supported opinions for this article (nbPos)
@@ -69,6 +63,11 @@ on comment:
     idx = Math.round(1 + (((scale - 1) / (max - min)) * nb))
 
 
+
+
+UPDATE ALL ARTICLES POPULARITY
+when comment added on an article changes the max comments
+(the min comments should always be 0 to avoid looping through all articles)
 
 
 
