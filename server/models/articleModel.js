@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 // use base url?
 var ArticleSchema = new mongoose.Schema({
   date: String, // put date ?
+  journal: String,
   url: String,
   tags: String, // change to array
   dataloc: String,

@@ -7,16 +7,18 @@ var User = require('../models/userModel.js');
 var Q = require('q');
 var helper = require('./helper.js');
 var request = require('request');
+var parseUrl = require('url');
 
 // Why does exporting the functions does not work?
 
-var createNewArticle = function(url, tags, minComments, maxComments) {
+var createNewArticle = function(url, journal, tags, minComments, maxComments) {
   // create new article
   var createArticle = Q.nbind(Article.create, Article);
   var date = helper.dateGenerator();
   var articleId;
   var newArticle = {
     date: date,
+    journal: journal,
     url: url,
     tags: tags,
     dataloc: '0', // TODO file system
@@ -66,6 +68,7 @@ var saveTable = function(table) {
 module.exports = {
     
   uploadArticle: function(url, tags, username, next) {
+    var journal = parseUrl.parse(url).hostname;
     var minMax;
     return getArticleByUrl(url)
       .then(function (foundArticle) {
@@ -77,7 +80,7 @@ module.exports = {
             .then(function (minMax) {
 
               // CREATE NEW ARTICLE
-              return createNewArticle(url, tags, minMax[0], minMax[1]);
+              return createNewArticle(url, journal, tags, minMax[0], minMax[1]);
             });
         } else {
           console.log("article already exists in database");
