@@ -11,10 +11,30 @@ angular.module('thesis.services', [])
     });
   };
 
+  // var getArticleHTML = function (url) {
+  //   return $http({
+  //     method: 'GET',
+  //     url: 'http://localhost:8000/api/html',
+  //   })
+  //   .then (function(resp) {
+  //     console.log(resp);
+  //   });
+  // };
+
   var getAll = function() {
     return $http({
       method: 'GET',
       url: '/api/articles'
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+
+  var getArticle = function(id) {
+    return $http({
+      method: 'GET',
+      url: '/api/document/' + id,
     })
     .then(function (resp) {
       return resp.data;
@@ -32,7 +52,9 @@ angular.module('thesis.services', [])
   return {
     addArticle: addArticle,
     getAll: getAll,
-    addComment: addComment
+    addComment: addComment,
+    getArticle: getArticle
+    // getArticleHTML: getArticleHTML
   };
 })
 

@@ -1,11 +1,25 @@
 angular.module('thesis.document', [])
 
-.controller('DocumentCtrl', function ($scope, Articles, User, $location) {
+.controller('DocumentCtrl', function ($scope, Articles, User, $location, $sce) {
   
+  // $scope.detailFrame= $sce.trustAsResourceUrl("http://www.bbc.com/news/world-middle-east-34226003");
+
   $scope.enableComment = false;
   $scope.toggleCommentArticle = function() {
     $scope.enableComment = !$scope.enableComment;
   };
+
+  $scope.getDocument = function() {
+    var docId = $location.$$path.slice(10);
+    Articles.getArticle(docId)
+      .then(function (url) {
+        $scope.website = $sce.trustAsResourceUrl(url);
+      })
+      .catch(function(err) {
+        console.log("oops cannot get html");
+      });
+  };
+  $scope.getDocument();
 
   $scope.comment = {};
   $scope.commentArticle = function() {    

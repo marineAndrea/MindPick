@@ -4,6 +4,7 @@ angular.module('thesis.user', [])
 
 .controller('UserCtrl', function ($scope, User, Articles, $location, $filter) {
 
+
   $scope.getUserInfo = function() {
     User.getInfo()
       .then(function (info) {
