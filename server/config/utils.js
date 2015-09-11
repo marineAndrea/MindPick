@@ -1,29 +1,133 @@
 //Model.findByIdAndRemove(id, [options], [callback])
 //Model.findByIdAndUpdate(id, [update], [options], [callback])
+// are the variables in thne global space?
 
 var Article = require('../models/articleModel.js');
 var User = require('../models/userModel.js');
 var Q = require('q');
+var helper = require('./helper.js');
 
-var alreadyExist = function(arr, item) {
-  return (arr.indexOf(item) !== -1);
+// Why does exporting the functions does not work?
+
+var createNewArticle = function(url, tags, minComments, maxComments) {
+  // create new article
+  var createArticle = Q.nbind(Article.create, Article);
+  var date = helper.dateGenerator();
+  var articleId;
+  var newArticle = {
+    date: date,
+    url: url,
+    tags: tags,
+    dataloc: '0', // TODO file system
+    uploaders: [],
+    commentators: [],
+    minmaxComments: [minComments, maxComments],
+    comments: [],
+    popularityIdx: 1,
+    controversy: {idx: 0, valence: 0}
+  };
+  // save article into Articles table
+  console.log('+++++++++++++++++++++newArticle', newArticle);
+  return createArticle(newArticle);
 };
 
-var dateGenerator =  function() {
-  var date = new Date();
-  var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-  var day = date.getDate();
-  var monthIndex = date.getMonth();
-  var year = date.getFullYear();
-  date = monthNames[monthIndex] + " " + day + ", " + year;
-  return date;
+var updateTable = function(table, field, item, check) { // do not save here for efficiency
+  if (check) {
+    if (helper.alreadyExist(table[field], item)) {
+      console.log("" + item + " already in user's " + field);
+      return table;
+    } 
+  }
+  table[field].push(item);
+  return table;
 };
 
+var getArticleByUrl = function(url) {
+  var findArticle = Q.nbind(Article.findOne, Article);
+  return findArticle({url: url});
+};
+
+var getAllArticles = function() {
+  var findAll = Q.nbind(Article.find, Article);
+  return findAll({});
+};
+
+var getUserByUsername = function(username) {
+  var findUser = Q.nbind(User.findOne, User);
+  return findUser({username: username});
+};
+
+var saveTable = function(table) {
+  var save = Q.nbind(table.save, table);
+  return save();
+};
 
 module.exports = {
+    
+  uploadArticle: function(url, tags, username, next) {
+    var minMax;
+    return getArticleByUrl(url)
+      .then(function (foundArticle) {
+        // if article does not exist
+        if (!foundArticle) {
+          console.log("article does not already exist in database");
+          // check if have to update all articles to new min = 0
+          return helper.articlesCheckOnUpload()
+            .then(function (minMax) {
 
-  updateUsersTable: function(identifier, field, item, check, next) {
+              // CREATE NEW ARTICLE
+              return createNewArticle(url, tags, minMax[0], minMax[1]);
+            });
+        } else {
+          console.log("article already exists in database");
+          return foundArticle;
+        }
+      })
+      // in any case
+      .then(function (article) {
+        return getUserByUsername(username)
+          .then(function (user) {
+            // UPDATE USERSARTICLES
+            // UPDATE ARTICLEUPLOADERS
+            user = updateTable(user, "articles", article._id, true);
+            artilce = updateTable(article, "uploaders", username, true);
+            return Q.all([saveTable(user), saveTable(article)]);
+          })
+          .then(function (userAndArticle) {
+            return userAndArticle[1][0]; // because after saving, get the model in an array
+          });
+      })
+      .catch(function (error) {
+        next(error);
+      });
+  },
+
+  updateTable: updateTable,
+
+  getAllArticles: getAllArticles,
+
+  getArticleById: function(id) {
+    var oid;
+    var findArticle = Q.nbind(Article.findOne, Article);
+    return findArticle({_id: id});
+  },
+
+  getUserByUsername: function(username) {
+    var findUser = Q.nbind(User.findOne, User);
+    return findUser({username: username});
+  },
+
+  saveTable: function(table) {
+    console.log('=============================================about to save table', table);
+    var save = Q.nbind(table.save, table);
+    return save();
+  }
+};
+
+
+/////////////////////////////   OTHER VERSIONS    ///////////////////////////
+  
+  /*updateUsersTable: function(identifier, field, item, check, next) {
     return User.findOne({username: identifier})
       .exec(function (err, user) { ///////////read about exec
         if (err) next(err); ///////////Error
@@ -40,30 +144,7 @@ module.exports = {
           return user.save();
         }
       });
-  },
-
-  updateArticlesTable: function(identifier, field, item, check, next) {
-    return Article.findOne({_id: identifier})
-      .exec(function (err, article) {
-        if (err) next(err); ///////////Error
-        if (!article) {
-          next(err); ///////////Error
-        } else {
-          if (check) {
-            if (alreadyExist(article[field], item)) {
-              console.log("" + item + " already in article's " + field);
-              return article;
-            }
-          }
-          article[field].push(item);
-          return article.save();
-        }
-      });
-  },
-
-
-  /////////////////////////////   OTHER VERSION WITH Q.NBIND    ///////////////////////////
-
+  },*/
   /*updateArticlesTable: function(identifier, field, item, check) {
     console.log('updateArticlesTable called with ', identifier, field, item, check);
     var findArticle = Q.nbind(Article.findOne, Article);
@@ -87,31 +168,3 @@ module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-
-  createNewArticle: function(url, tags) {
-    // create new article
-    var createArticle = Q.nbind(Article.create, Article);
-    var date = dateGenerator();
-    var articleId;
-    var newArticle = {
-      url: url,
-      tags: tags,
-      uploaders: [],
-      dataloc: '0', // TODO file system
-      date: date,
-      comments: [],
-      commentators: [],
-      popularityIdx: 0,
-      controversyIdx: 0
-    };
-    // save article into Articles table
-    return createArticle(newArticle);
-  },
-
-  getArticleId: function(id) {
-    var oid;
-    var findArticle = Q.nbind(Article.findOne, Article);
-    return findArticle({_id: id});
-  }
-
-};

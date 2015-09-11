@@ -2,127 +2,73 @@ var Article = require('../models/articleModel.js');
 var User = require('../models/userModel.js');
 var Q = require('q');
 var utils = require('../config/utils.js');
-
-var createBelief = function(id, opin, src, ctrIdx) {
-  var belief = {
-    articleId: id,
-    opinion: opin,
-    source: src,
-    controversyIdx: ctrIdx
-  };
-  return belief;
-};
-
-var createComment = function(name, id, opin, src) {
-  var comment = {
-    username: name,
-    articleId: id,
-    opinion: opin,
-    source: src
-  };
-  return comment;
-};
-
-var uploadArticle = function(url, tags, username, next) {
-
-  // if article does not exist
-  //   CREATE NEW ARTICLE
-  // in any case
-  // UPDATE ARTICLEUPLOADERS
-  // UPDATE USERSARTICLES
-
-  var findArticle = Q.nbind(Article.findOne, Article);
-  return findArticle({url: url})
-    .then(function (foundArticle) {
-      if (!foundArticle) {
-        console.log("article does not already exist in database");
-        return utils.createNewArticle(url, tags);
-      } else {
-        console.log("article already exists in database");
-        return foundArticle;
-      }
-    })
-    .then(function (article) {
-      return utils.updateArticlesTable(article._id, "uploaders", username, true, next); ///////////Error
-    })
-    .then(function (article) {
-      return utils.updateUsersTable(username, "articles", article._id, true, next); ///////////Error
-    })
-    .catch(function (error) { //Error
-      next(error);
-    });
-};
+var helper = require('../config/helper.js');
 
 module.exports = {
-
   commentDocument: function(req, res, next) {
 
-
-    // only if opinion provided
-    //   UPDATE USEROPINIONS
-    //   update user by pushing comment: {articleID, opinion, controversyIdx} into opinions [] in user table
-    // only if source provided
-    //   UPLOAD ARTICLE
-    // in any case
-    //   UPDATE ARTICLECOMMENTS (set up default opinion to related)
-    //   update article by pushing comment {articleID, username, opinion, source} into comments [] in article table
-    //   UPDATE ARTICLECOMMENTATORS
-    //   update article by pushing username into commentators [] in article table
-    //   UPDATE USERARTICLES
-
-
-    // get username from local storage
     var username = req.body.username;
+    var articleId;
     var opinion = req.body.opinion || "interesting";
     var source = req.body.source;
     if (source) {
       var url = req.body.source.url || undefined;
       var tags = req.body.source.tags || undefined;
     }
-    var articleId, articleContrIdx, comment, belief;
-    // get article Id
-    utils.getArticleId(req.body.articleId)
+    var comment, belief, minMax;
+
+    utils.getArticleById(req.body.articleId)
+      // UPDATE ARTICLECOMMENTS (set up default opinion to related) by pushing comment into comments [] in article table
       .then(function (article) {
         articleId = article._id;
-        articleContrIdx = article.controversyIdx;
-        comment = createComment(username, articleId, opinion, source);
-        belief = createBelief(articleId, opinion, source, articleContrIdx);
-        if (opinion !== "interesting") {
-          console.log("opninon provided", opinion);
-          return utils.updateUsersTable(username, "beliefs", belief, false, next); ///////////Error
-          // returns a user
-        } else {
-          console.log("no opinion provided");
-        }
+        return utils.getUserByUsername(username)
+          .then(function (user) {
+            // UPDATE USERARTICLES by pushing article id into articles [] in user table
+            user = utils.updateTable(user, "articles", articleId, true);
+            // UPDATE ARTICLECOMMENTATORS by pushing username into commentators [] in article table
+            article = utils.updateTable(article, "commentators", username, true);
+            comment = helper.createComment(articleId, username, opinion, source);
+            // UPDATE ARTICLECOMMENTS by pushing comment {articleID, username, opinion, source} into comments [] in article table
+            article = utils.updateTable(article, "comments", comment, false, next);
+            // need to save pushed comment in article comments, in case update all articles is called and its popularity has to be evaluated
+            return utils.saveTable(article)
+              .then(function (article) { // article after saved is an array
+                // only if opinion provided
+                if (opinion !== "interesting") {
+                  console.log("opninon provided:", opinion);
+                  // GET CONTROVERSY INDEX and UPDATE ARTICLECONTRIDX
+                  article[0].controversy = helper.getControversy(article[0], 10);
+                  // check if new max comment and UPDATE ARTILCEPOPULARITY, MIN and MAX
+                  minMax = helper.articlesCheckOnComment(article[0]); // is going to be a promise!!!
+                  article[0].minmaxComments = [minMax[0], minMax[1]];
+                  article[0].popularityIdx = helper.getPopularity(article[0], 10);
+
+                  // UPDATE USEROPINIONS by pushing belief: {username, articleID, opinion, source, controversyIdx, popularity, dissonanceIdx} into beliefs [] in user table
+                  belief = helper.createBelief(username, articleId, opinion, source);
+                  user = utils.updateTable(user, "beliefs", belief, false, next);
+                }
+                return Q.all([utils.saveTable(article[0]), utils.saveTable(user)]);
+              });
+          });
       })
-      .then(function (user) {
+      .then(function (articleAndUser) {
+        // only if source provided
         if (source) {
-          console.log("source provided", source);
-          return uploadArticle(url, tags, username, next);
-          // returns a user
+          console.log("source provided:", source);
+          // UPLOAD ARTICLE
+          return utils.uploadArticle(url, tags, username, next);
         } else {
           console.log("no source provided");
-          return user;
+          return articleAndUser[0];
         }
       })
-      .then(function (user) {
-        return utils.updateArticlesTable(articleId, "comments", comment, false, next);
-      })
       .then(function (article) {
-        return utils.updateArticlesTable(articleId, "commentators", username, true, next);
+        res.json();
       })
-      .then(function (article) {
-        return utils.updateUsersTable(username, "articles", articleId, true, next);
-      })
-      .then(function (user) {
-        if (!user) {
-          next(err); //Error
-        } else {
-          res.json();
-        }
-      })
-      .catch(function (error) { //Error
+      .catch(function (error) {
         next(error);
       });
   }
 };
+
+

@@ -4,15 +4,15 @@ var User = require('../models/userModel.js');
 var Q = require('q');
 var jwt = require('jwt-simple');
 var utils = require('../config/utils.js');
+var helper = require('../config/helper.js');
 
 module.exports = {
   
-  getUserByUsername: function(req, res, next) {
+  userInfo: function(req, res, next) {
     // console.log(req.params.username, 'req.params.username');
     var username = req.params.username;
-    var findUser = Q.nbind(User.findOne, User);
-    findUser({username: username})
-      .then(function(user) {
+    utils.getUserByUsername(username)
+      .then(function (user) {
         res.json(user);
       })
       .fail(function (error) {

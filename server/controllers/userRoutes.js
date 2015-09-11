@@ -7,5 +7,5 @@ module.exports = function(app) { // app === userRouter injected from middlware.j
   app.post('/signup', userController.signup);
   app.get('/signedin', userController.checkAuth);
   app.route('/:username')
-    .get(userController.getUserByUsername);
+    .get(userController.userInfo);
 };
