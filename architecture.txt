@@ -1,25 +1,40 @@
+************************************************************************************************************
+       
             Upload article from profile:
 
 UPLOAD ARTICLE:
 
 if article does not exist
-
-  CREATE NEW ARTICLE:
-  create new article
+  check update all articles (for minComments value and pop idx) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CREATE NEW ARTICLE
 
 in any case
-
-  UPDATE USERSARTICLES
+  UPDATE USERSARTICLES:
   update user by pushing article id into articles [] in user table
 
   UPDATE ARTICLEUPLOADERS:
   update article by pushing username into uploaders [] in article table
 
+
+
+************************************************************************************************************
+
             Comment article from document
 
 COMMENT ARTICLE:
+  UPDATE USERARTICLES
+
+  UPDATE ARTICLECOMMENTATORS
+  update article by pushing username into commentators [] in article table
+
+  UPDATE ARTICLECOMMENTS: (set up default opinion to related)
+  update article by pushing comment {articleID, username, opinion, source} into comments [] in article table
 
 only if opinion provided
+
+  GET CONTROVERSY INDEX
+  UPDATE ARTICLE CONTR IDX
+  check update all articles (for maxComments value and pop index)
 
   UPDATE USEROPINIONS
   update user by pushing comment: {articleID, opinion, controversyIdx} into opinions [] in user table
@@ -27,44 +42,47 @@ only if opinion provided
 only if source provided
   UPLOAD ARTICLE
 
-in any case
-  UPDATE ARTICLECOMMENTS (set up default opinion to related)
-  update article by pushing comment {articleID, username, opinion, source} into comments [] in article table
-  UPDATE ARTICLECOMMENTATORS
-  update article by pushing username into commentators [] in article table
-  UPDATE USERARTICLES
 
 
-TEST
-eric
-  upload 1 & 2
-  com 
-    3 (undef source 6)
-    1 (not supp source 2)
 
->> up: 1 2 6 (2 should not be repeated)
->> com 3 1
 
-minos
-  upload 2 & 3
-  com 1 (supp source 7)
-  com 1 (undef source 2)
 
->> up: 2 3 7 (2 should not be repeated)
->> com 1 (1 should have one belief)
 
-mike
-  upload 1 & 3 & 4
 
->> up: 1 3 4
->> com none
 
-marine
-  com 
-    6 (no op no source) must not work
-    1 (notsup)
+GET CONTROVERSY INDEX (article, scale)
+on comment:
+  get the nb of supported opinions for this article (nbPos)
+  get the nb of unsupported opinions for this article (nbNeg)
+  get leastContr: (nbPos + nbNeg)
+  get contr: (nbPos - nbNeg)
+  ctrIdx = {
+    idx: Math.round((scale/ leastCtr) * (leastCtr - Math.abs(contr)));
+    valence: 1 if contr > 0, -1 if contr < 0, 0 if contr === 0
 
->> up none
->> com 1
+GET POPULARITY INDEX (article, articles, scale)
+on comment:
+  loop through articles
+    get the one that has the most comments (max)
+    and the one that has the least comments (min)
+    get the number of comments for the article (nb)
+    idx = Math.round(1 + (((scale - 1) / (max - min)) * nb))
+
+
+
+
+
+when get articles on profile
+loop through user's articles
+  if article commented by user
+or update all dissonance idx on article's comments when article commented
+(after contr idx updated)
+
+    GET DISSONANCE INDEX (article, userAverageOpinion(-1 -> 1)) 
+    // improve this later by adding threshold : if above 0.5 or below -0.5
+    userValence = -1 or 1 or 0
+    articleValence = article.controversyIdx.valence (1, -1, or 0)
+    // add threshold as well using article.controversyIdx.idx (if < 5.5)
+    dissIdx = (userValence * articleValence) < 0 ?
 
 
