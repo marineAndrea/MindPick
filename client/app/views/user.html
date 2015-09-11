@@ -64,7 +64,8 @@
         <!-- <th>Uploaded</th>
         <th>Commented</th> -->
         <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-        <th><a href="" ng-click="order('-controversyIdx')">Controversial</a></th>
+        <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+        <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
       </tr>
 
       <tr ng-repeat="article in userArticles | filter:search:strict">
@@ -74,7 +75,8 @@
         <!-- <td>{{ article.uploaded }}</td>
         <td>{{ article.commented }}</td> -->
         <td>{{ article.popularityIdx }}</td>
-        <td>{{ article.controversyIdx }}</td>
+        <td>{{ article.controversy.idx }}</td>
+        <td>{{ article.controversy.valence }}</td>
       </tr>
     </table>
 

@@ -23,7 +23,7 @@ angular.module('thesis.user', [])
     var url = $scope.article.url;
     var tags = $scope.article.tags;
     if (url && tags) {
-      Articles.uploadArticle($scope.article)
+      Articles.addArticle($scope.article)
         .then(function() {
           $scope.article = null;
           // $location.path('/articles');

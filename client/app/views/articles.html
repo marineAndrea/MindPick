@@ -37,14 +37,16 @@
         <th>Url</th>
         <th>Tags</th>
         <th>Popularity</th>
-        <th>Controversial</th>
+        <th>Controversy</th>
+        <th>Valence</th>
       </tr>
       <tr ng-repeat="article in articles | filter:search:strict">
         <td>{{ article.date }}</td>
         <td><a ng-href="#/document/{{article._id}}">{{ article.url }}</a></td>
         <td>{{ article.tags }}</td>
         <td>{{ article.popularityIdx }}</td>
-        <td>{{ article.controversyIdx }}</td>
+        <td>{{ article.controversy.idx }}</td>
+        <td>{{ article.controversy.valence }}</td>
       </tr>
     </table>
 

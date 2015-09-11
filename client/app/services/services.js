@@ -3,7 +3,7 @@
 angular.module('thesis.services', [])
 
 .factory('Articles', function ($http) { 
-  var uploadArticle = function(article) {
+  var addArticle = function(article) {
     return $http({
       method: 'POST',
       url: '/api/articles',
@@ -30,7 +30,7 @@ angular.module('thesis.services', [])
   };
 
   return {
-    uploadArticle: uploadArticle,
+    addArticle: addArticle,
     getAll: getAll,
     addComment: addComment
   };
