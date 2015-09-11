@@ -34,7 +34,7 @@
     <table class="profileArticlesTable">
       <tr>
         <th>Date</th>
-        <th>Url</th>
+        <th>Source</th>
         <th>Tags</th>
         <th>Popularity</th>
         <th>Controversy</th>
@@ -42,7 +42,7 @@
       </tr>
       <tr ng-repeat="article in articles | filter:search:strict">
         <td>{{ article.date }}</td>
-        <td><a ng-href="#/document/{{article._id}}">{{ article.url }}</a></td>
+        <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
         <td>{{ article.tags }}</td>
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversy.idx }}</td>

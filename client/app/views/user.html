@@ -51,6 +51,8 @@
 
     <label>Tags: <input ng-model="search.tags">
     </label><br>
+    <label>Source: <input ng-model="search.journal">
+    </label><br>
     <label>Uploaded: <input type="checkbox" ng-click="includeUploaded()">
     </label><br>
     <label>Commented: <input type="checkbox" ng-click="includeCommented()">
@@ -59,7 +61,7 @@
     <table class="profileArticlesTable">
       <tr>
         <th><a href="" ng-click="order('date')">Date</a></th>
-        <th>Url</th>
+        <th>Source</th>
         <th>Tags</th>
         <!-- <th>Uploaded</th>
         <th>Commented</th> -->
@@ -70,7 +72,7 @@
 
       <tr ng-repeat="article in userArticles | filter:search:strict">
         <td>{{ article.date }}</td>
-        <td><a ng-href="#/document/{{article._id}}">{{ article.url }}</a></td>
+        <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
         <td>{{ article.tags }}</td>
         <!-- <td>{{ article.uploaded }}</td>
         <td>{{ article.commented }}</td> -->

@@ -22,6 +22,8 @@ angular.module('thesis.user', [])
     var username = User.getUsername();
     $scope.article.username = username;
     var url = $scope.article.url;
+    // var journal = url.parser.host;
+    // console.log('***********************host', host);
     var tags = $scope.article.tags;
     if (url && tags) {
       Articles.addArticle($scope.article)
