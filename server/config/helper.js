@@ -49,8 +49,10 @@ module.exports = {
       "July", "August", "September", "October", "November", "December"];
     var day = date.getDate();
     var monthIndex = date.getMonth();
+    var month = monthIndex < 10 ? "0" + monthIndex : monthIndex;
     var year = date.getFullYear();
-    date = monthNames[monthIndex] + " " + day + ", " + year;
+    // date = monthNames[monthIndex] + " " + day + ", " + year;
+    date = "" + year + "-" +  month + "-" + day;
     return date;
   },  
 
