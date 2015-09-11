@@ -5,6 +5,19 @@ var utils = require('../config/utils.js');
 var helper = require('../config/helper.js');
 
 module.exports = {
+  websiteUrl: function(req, res, next) {
+    var id = req.params.id;
+    utils.getArticleById(id)
+      .then(function (article) {
+        // var html = article.dataloc;
+        var url = article.url;
+        res.json(url);
+      })
+      .catch(function (error) {
+        next(error);
+      });
+  },
+
   commentDocument: function(req, res, next) {
 
     var username = req.body.username;

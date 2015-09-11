@@ -6,6 +6,7 @@ var Article = require('../models/articleModel.js');
 var User = require('../models/userModel.js');
 var Q = require('q');
 var helper = require('./helper.js');
+var request = require('request');
 
 // Why does exporting the functions does not work?
 
@@ -94,6 +95,15 @@ module.exports = {
             return Q.all([saveTable(user), saveTable(article)]);
           })
           .then(function (userAndArticle) {
+            // do not store html, using iframe on the front-end instead!
+            //send request to url and save into db 
+            // request(url, function(error, response, body) {
+            //   if (!error && response.statusCode == 200) {
+            //     console.log(body);
+            //     article.dataloc = body;
+            //     saveTable(article);
+            //   }
+            // });
             return userAndArticle[1][0]; // because after saving, get the model in an array
           });
       })
