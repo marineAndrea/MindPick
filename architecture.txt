@@ -5,7 +5,7 @@
 UPLOAD ARTICLE:
 
 if article does not exist
-  check update all articles (for minComments value and pop idx) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  check update all articles (for minComments value and pop idx)
   CREATE NEW ARTICLE
 
 in any case
@@ -15,6 +15,7 @@ in any case
   UPDATE ARTICLEUPLOADERS:
   update article by pushing username into uploaders [] in article table
 
+and send request to url and store html to db
 
 
 ************************************************************************************************************
@@ -43,6 +44,7 @@ only if source provided
   UPLOAD ARTICLE
 
 
+************************************************************************************************************
 
 GET CONTROVERSY INDEX (article, scale)
 on comment:
@@ -62,26 +64,68 @@ on comment:
     get the number of comments for the article (nb)
     idx = Math.round(1 + (((scale - 1) / (max - min)) * nb))
 
+when get articles on profile
+loop through user's articles
+  if article commented by user ...
+or 
+update all dissonance idx on article's comments when article commented (after contr idx updated)
+
+GET DISSONANCE INDEX (article, userAverageOpinion(-1 -> 1)) 
+// improve this later by adding threshold : if above 0.5 or below -0.5
+userValence = -1 or 1 or 0
+articleValence = article.controversyIdx.valence (1, -1, or 0)
+// add threshold as well using article.controversyIdx.idx (if < 5.5)
+dissIdx = (userValence * articleValence) < 0 ?
 
 
+************************************************************************************************************
 
 UPDATE ALL ARTICLES POPULARITY
 when comment added on an article changes the max comments
 (the min comments should always be 0 to avoid looping through all articles)
 
 
+************************************************************************************************************
 
-when get articles on profile
-loop through user's articles
-  if article commented by user
-or update all dissonance idx on article's comments when article commented
-(after contr idx updated)
+When url added
+if article is not in db
+after saving article into db 
+send request to website
+and save data to db
 
-    GET DISSONANCE INDEX (article, userAverageOpinion(-1 -> 1)) 
-    // improve this later by adding threshold : if above 0.5 or below -0.5
-    userValence = -1 or 1 or 0
-    articleValence = article.controversyIdx.valence (1, -1, or 0)
-    // add threshold as well using article.controversyIdx.idx (if < 5.5)
-    dissIdx = (userValence * articleValence) < 0 ?
+when userc click on link
+if data not stored yet
+display message
+
+
+404 
+UrlParser = require(url)
+parts = urlParser.parse(request.url)
+parts.pathname
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
