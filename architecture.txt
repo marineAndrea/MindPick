@@ -64,6 +64,9 @@ on comment:
     get the number of comments for the article (nb)
     idx = Math.round(1 + (((scale - 1) / (max - min)) * nb))
 
+
+
+
 when get articles on profile
 loop through user's articles
   if article commented by user ...

@@ -63,6 +63,33 @@ angular.module('thesis.services', [])
     return $window.localStorage.getItem('com.thesis.username'); // || User?
   };
 
+  var getDissonance = function(articleValence, userValence) {
+    return +(userValence * articleValence === -1);
+  };
+  
+  var getUserValence = function(article, name) {
+    var opinion = 0;
+    var comment;
+    for (var i = 0; i < article.comments.length; i++) {
+      comment = article.comments[i];
+      if (comment.username === name) {
+        if (comment.opinion === "supported") {
+          opinion += 1;
+        } else if (comment.opinion === "notSupported") {
+          opinion -= 1;
+        }
+      }
+    }
+    if (opinion > 0) {
+      return 1;
+    } else if (opinion < 0) {
+      return -1;
+    } else {
+      return 0;
+    }
+    // return opinion > 0 ? 1 : -1;
+  };
+
   var getInfo = function() {
     var username = getUsername();
     return $http({
@@ -76,7 +103,9 @@ angular.module('thesis.services', [])
 
   return {
     getUsername: getUsername,
-    getInfo: getInfo
+    getInfo: getInfo,
+    getDissonance : getDissonance,
+    getUserValence: getUserValence
   };
 })
 

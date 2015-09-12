@@ -4,18 +4,18 @@ angular.module('thesis.user', [])
 
 .controller('UserCtrl', function ($scope, User, Articles, $location, $filter) {
 
-
-  $scope.getUserInfo = function() {
-    User.getInfo()
-      .then(function (info) {
-        $scope.user = info;
-        $scope.user.picture = $scope.user.picture || "https://upload.wikimedia.org/wikipedia/commons/9/9b/Social_Network_Analysis_Visualization.png";
-      })
-      .catch(function (error) {
-        console.log("oops cannot get user's info");
-      });
-  };
-  $scope.getUserInfo();
+  // DON"T NEED THIS ANYMORE, it is being called in GetUserArticles
+  // $scope.getUserInfo = function() {
+  //   User.getInfo()
+  //     .then(function (info) {
+  //       $scope.user = info;
+  //       $scope.user.picture = $scope.user.picture || "https://upload.wikimedia.org/wikipedia/commons/9/9b/Social_Network_Analysis_Visualization.png";
+  //     })
+  //     .catch(function (error) {
+  //       console.log("oops cannot get user's info");
+  //     });
+  // };
+  // $scope.getUserInfo();
 
   $scope.article = {};
   $scope.uploadArticle = function() {
@@ -80,6 +80,7 @@ angular.module('thesis.user', [])
       }
     }
   };
+
   $scope.includeCommented = function() {
     if (!$scope.checkCommented) {
       $scope.checkCommented = true;
@@ -118,6 +119,9 @@ angular.module('thesis.user', [])
     $scope.userArticles = [];
     User.getInfo()
       .then(function (userInfo) {
+        $scope.user = userInfo;
+        $scope.user.picture = $scope.user.picture || "https://upload.wikimedia.org/wikipedia/commons/9/9b/Social_Network_Analysis_Visualization.png";
+      
         var username = userInfo.username;
         var userArticles = userInfo.articles;
         // get all articles
@@ -135,6 +139,9 @@ angular.module('thesis.user', [])
                   $scope.userArticles.push(articles[i]);
                   articles[i].uploaded = (articles[i].uploaders.indexOf(username) !== -1) ? 1 : 0;
                   articles[i].commented = (articles[i].commentators.indexOf(username) !== -1) ? 1 : 0;
+                  articles[i].userValence = User.getUserValence(articles[i], username);
+                  articleValence = articles[i].controversy.valence;
+                  articles[i].dissonance = User.getDissonance(articles[i].controversy.valence, articles[i].userValence); // returns true or false
                 }
               }
             }

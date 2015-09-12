@@ -68,6 +68,8 @@
         <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
         <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
         <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
+        <th><a href="" ng-click="order('-userValence')">User's Opinion</a></th>
+        <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th>
       </tr>
 
       <tr ng-repeat="article in userArticles | filter:search:strict">
@@ -79,6 +81,8 @@
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversy.idx }}</td>
         <td>{{ article.controversy.valence }}</td>
+        <td>{{ article.userValence }}</td>
+        <td>{{ article.dissonance }}</td>
       </tr>
     </table>
 
