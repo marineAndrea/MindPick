@@ -33,12 +33,17 @@
     
     <table class="profileArticlesTable">
       <tr>
-        <th>Date</th>
+        <th><a href="" ng-click="order('date')">Date</a></th>
+        <th>Source</th>
+        <th>Tags</th>
+        <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+        <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+        <!-- <th>Date</th>
         <th>Source</th>
         <th>Tags</th>
         <th>Popularity</th>
         <th>Controversy</th>
-        <th>Valence</th>
+        <th>Valence</th> -->
       </tr>
       <tr ng-repeat="article in articles | filter:search:strict">
         <td>{{ article.date }}</td>
@@ -46,7 +51,7 @@
         <td>{{ article.tags }}</td>
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversy.idx }}</td>
-        <td>{{ article.controversy.valence }}</td>
+        <!-- <td>{{ article.controversy.valence }}</td> -->
       </tr>
     </table>
 
