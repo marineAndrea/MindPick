@@ -156,6 +156,45 @@ module.exports = {
       newMax = article.minmaxComments[1];
     }
     return [article.minmaxComments[0], newMax];
-  }
+  },
 
+  averageOpinions: function(arr) { // an array of tuples
+    // change opinion into values
+    // look for duplicates
+    var obj = {};
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][1] === 'supported') {
+        arr[i][1] = 1;
+      } else if (arr[i][1] === 'notSupported') {
+        arr[i][1] = -1;
+      } else {
+        arr[i][1] = 0;
+      }
+      obj[arr[i][0]] = (obj[arr[i][0]] || []).concat([arr[i][1]]);
+    }
+    // generate average opinion
+    for (var key in obj) {
+      var score = 0;
+      var attr = "";
+      if (obj[key].length > 1) {
+        for (var j = 0; j < obj[key].length; j++) {
+          score += obj[key][j];
+        }
+        obj[key] = score;
+      } else {
+        obj[key] = obj[key][0];
+      }
+    }
+    // return an array with labels for opinions
+    for (key in obj) {
+      if (obj[key] >= 1) {
+        obj[key] = "supporting";
+      } else if (obj[key] <= -1) {
+        obj[key] = "undermining";
+      } else {
+        obj[key] = "related";
+      }
+    }
+    return obj;
+  }
 };
