@@ -49,14 +49,10 @@
 
     <h1>Articles</h1>
 
-    <label>Tags: <input ng-model="search.tags">
-    </label><br>
-    <label>Source: <input ng-model="search.journal">
-    </label><br>
-    <label>Uploaded: <input type="checkbox" ng-click="includeUploaded()">
-    </label><br>
-    <label>Commented: <input type="checkbox" ng-click="includeCommented()">
-    </label>
+    <label>Tags: <input ng-model="search.tags"></label><br>
+    <label>Source: <input ng-model="search.journal"></label><br>
+    <label>Uploaded: <input type="checkbox" ng-click="includeUploaded()"></label><br>
+    <label>Commented: <input type="checkbox" ng-click="includeCommented()"></label>
     
     <table class="profileArticlesTable">
       <tr>
@@ -67,8 +63,8 @@
         <th>Commented</th> -->
         <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
         <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-        <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
-        <th><a href="" ng-click="order('-userValence')">User's Opinion</a></th>
+        <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
+        <th><a href="" ng-click="order('-userValence')">Your Opinion</a></th> -->
         <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th>
       </tr>
 
@@ -80,8 +76,8 @@
         <td>{{ article.commented }}</td> -->
         <td>{{ article.popularityIdx }}</td>
         <td>{{ article.controversy.idx }}</td>
-        <td>{{ article.controversy.valence }}</td>
-        <td>{{ article.userValence }}</td>
+        <!-- <td>{{ article.controversy.valence }}</td>
+        <td>{{ article.userValence }}</td> -->
         <td>{{ article.dissonance }}</td>
       </tr>
     </table>

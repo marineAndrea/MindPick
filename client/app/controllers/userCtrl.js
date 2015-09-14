@@ -147,7 +147,7 @@ angular.module('thesis.user', [])
             }
             $scope.articlesInMemory = $scope.userArticles;
           })
-          .then(function () {
+          .then(function () { // !!!!!!!!!!!!!!!!!! WHY IN THE THEN?
             $scope.order('-popularityIdx',false); // change to date but change date format first
           })
           .catch(function (error) {
