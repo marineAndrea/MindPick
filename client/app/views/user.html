@@ -27,10 +27,10 @@
 <div class="container">
   <div class="media profileInfo">
   <div class="media-body">
-    <h4 class="media-heading">Info</h4>
-    <p class="username"> Username: {{ user.username }} </p>
-    <p class="email"> Email: {{ user.email }} </p> <!-- make it a link -->
-    <p>Interests: {{ user.interests }}</p> <!-- ng-repeat -->
+    <h4 class="media-heading">{{ user.username }}</h4>
+    <p class="email"> {{ user.email }} </p> <!-- make it a link -->
+    <h4 class="media-heading">Interests</h4>
+    <p class="interests"> {{ user.interests }}</p> <!-- ng-repeat -->
   </div>
   <div class="media-right">
     <a href="#">
@@ -49,23 +49,20 @@
 </div>
 
 <div class="container">
-  <div class="input-group"> 
-    <span class="input-group-addon" id="basic-addon1">Tags</span>
-    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" ng-model="search.tags">
-    <span class="input-group-addon" id="basic-addon1">Source</span>
-    <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" ng-model="search.journal">
-    <span class="input-group-addon">Uploaded 
-      <input type="checkbox" aria-label="uploaded articles" ng-click="includeUploaded()">
-    </span>
-    <span class="input-group-addon">Commented 
-      <input type="checkbox" aria-label="commented articles" ng-click="includeCommented()">
-    </span>
-  </div>
-</div>
-
-<div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">Articles</div>
+    <div class="input-group"> 
+      <span class="input-group-addon" id="basic-addon1">Topic</span>
+      <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="search.tags">
+      <span class="input-group-addon" id="basic-addon1">Source</span>
+      <input type="text" class="form-control" placeholder="Journal" aria-describedby="basic-addon1" ng-model="search.journal">
+      <span class="input-group-addon">Uploaded 
+        <input type="checkbox" aria-label="uploaded articles" ng-click="includeUploaded()">
+      </span>
+      <span class="input-group-addon">Commented 
+        <input type="checkbox" aria-label="commented articles" ng-click="includeCommented()">
+      </span>
+    </div>
     <table class="table profileArticlesTable">
       <tr>
         <th><a href="" ng-click="order('date')">Date</a></th>

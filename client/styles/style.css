@@ -10,5 +10,9 @@ iframe {
 }
 
 .picture {
-  width: 150px;
+  width: 240px;
+}
+
+.document {
+  border: 1px solid black;
 }

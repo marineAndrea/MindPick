@@ -1,60 +1,51 @@
-<div class="container">
-  
-  <div class="subcontainer">
-    <nav class="navigation">
-      <ul>
-        <li>
-          <a class="selected" href="#/articles">Articles</a>
-        </li>
-        <li>
-          <a href="#/users/profile">Profile</a>
-        </li>
-        <li>
-          <a href="#/signin">Sign In</a>
-        </li>
-        <li>
-          <a href="#/signup">Sign Up</a>
-        </li>
-        <li>
-          <a href="#/articles">Logout</a>
-        </li>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
+        <li><a href="#/users/profile">Profile</a></li>
       </ul>
-    </nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#/signup">Sign Up</a></li>
+        <li><a href="#/signin">Sign In</a></li>
+        <li><a href="#/articles">Logout</a></li>
+      </ul>
+    </div>
   </div>
+</nav>
 
-  <div class="subcontainer">
-
-    <h1>Articles</h1>
-    <!-- add default chronological order -->
-    <label>Tags: <input ng-model="search.tags">
-    </label><br>
-    <!-- <label>Date: <input ng-model="search.date">
-    </label><br> -->
-    
-    <table class="profileArticlesTable">
-      <tr>
-        <th><a href="" ng-click="order('date')">Date</a></th>
-        <th>Source</th>
-        <th>Tags</th>
-        <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-        <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-        <!-- <th>Date</th>
-        <th>Source</th>
-        <th>Tags</th>
-        <th>Popularity</th>
-        <th>Controversy</th>
-        <th>Valence</th> -->
-      </tr>
-      <tr ng-repeat="article in articles | filter:search:strict">
-        <td>{{ article.date }}</td>
-        <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
-        <td>{{ article.tags }}</td>
-        <td>{{ article.popularityIdx }}</td>
-        <td>{{ article.controversy.idx }}</td>
-        <!-- <td>{{ article.controversy.valence }}</td> -->
-      </tr>
-    </table>
-
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Articles</div>
+      <div class="input-group"> 
+        <span class="input-group-addon" id="basic-addon1">Topic</span>
+        <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="search.tags">
+      </div>
+      <table class="table profileArticlesTable">
+        <tr>
+          <th><a href="" ng-click="order('date')">Date</a></th>
+          <th>Source</th>
+          <th>Tags</th>
+          <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+          <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+        </tr>
+        <tr ng-repeat="article in articles | filter:search:strict">
+          <td>{{ article.date }}</td>
+          <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
+          <td>{{ article.tags }}</td>
+          <td>{{ article.popularityIdx }}</td>
+          <td>{{ article.controversy.idx }}</td>
+          <!-- <td>{{ article.controversy.valence }}</td> -->
+        </tr>
+      </table>
+    </div>
   </div>
-  
 </div>
