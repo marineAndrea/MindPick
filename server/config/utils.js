@@ -125,13 +125,17 @@ module.exports = {
     return findArticle({_id: id});
   },
 
+  getMultiArticles: function(arr) {
+    var findArticles = Q.nbind(Article.find, Article);
+    return findArticles({url: {$in: arr}});
+  },
+
   getUserByUsername: function(username) {
     var findUser = Q.nbind(User.findOne, User);
     return findUser({username: username});
   },
 
   saveTable: function(table) {
-    console.log('=============================================about to save table', table);
     var save = Q.nbind(table.save, table);
     return save();
   }
