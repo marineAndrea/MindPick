@@ -13,7 +13,8 @@ var ArticleSchema = new mongoose.Schema({
   minmaxComments: Array,
   comments: Array,
   popularityIdx: Number,
-  controversy: Object
+  controversy: Object,
+  relationship: String // add this to get related articles
 });
 
 module.exports = mongoose.model('Article', ArticleSchema);
