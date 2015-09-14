@@ -31,6 +31,16 @@ angular.module('thesis.services', [])
     });
   };
 
+  var getRelated = function(id) {
+    return $http({
+      method: 'GET',
+      url: '/api/articles/' + id,
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+
   var getArticle = function(id) {
     return $http({
       method: 'GET',
@@ -53,7 +63,8 @@ angular.module('thesis.services', [])
     addArticle: addArticle,
     getAll: getAll,
     addComment: addComment,
-    getArticle: getArticle
+    getArticle: getArticle,
+    getRelated: getRelated
     // getArticleHTML: getArticleHTML
   };
 })
