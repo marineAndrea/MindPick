@@ -27,22 +27,43 @@
     <div class="docNav">
       <ul>
         <li ng-click="toggleCommentArticle()">Comment Article</li>
-        <!-- <li ng-click="toggleArticleStats()">View Article Stats</li>
-        <li ng-click="toggleRelatedArticles()">View Related Articles</li> -->
+        <!-- <li ng-click="toggleArticleStats()">View Article Stats</li> -->
+        <li ng-click="toggleRelatedArticles()">View Related Articles</li>
       </ul>
     </div>
-    <div class="document">
-      <iframe ng-src="{{website}}"></iframe>
-      <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p> -->
-      <!-- {{ article }} -->
+
+  <div class="subcontainer">
+    <div class="relatedArticles" ng-show="enableViewRelatedArticles">
+      <h1>Related Articles</h1>
+      <label>Supporting: <input type="checkbox" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()"></label><br>
+      <label>Undermining: <input type="checkbox" ng-model="underChecked" ng-disabled="supChecked" ng-click="includeUndermining()"></label><br>
+
+      <table class="relatedArticlesTable">
+        <tr>
+          <!-- <th>Relationship</th> -->
+          <th><a href="" ng-click="order('date')">Date</a></th>
+          <th>Source</th>
+          <th>Tags</th>
+          <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+          <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+          <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
+        </tr>
+        <tr ng-repeat="article in relatedArticles | filter:search:strict">
+          <!-- <td>{{ article.relationship }}</td> -->
+          <td>{{ article.date }}</td>
+          <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
+          <td>{{ article.tags }}</td>
+          <td>{{ article.popularityIdx }}</td>
+          <td>{{ article.controversy.idx }}</td>
+          <!-- <td>{{ article.controversy.valence }}</td> -->
+        </tr>
+      </table>
     </div>
   </div>
 
   <div class="subcontainer">
     <div class="commentArticle" ng-show="enableComment"> <!-- make it a table? -->
+      <h1>Comment Article</h1>
       <form name="commentArticleForm" ng-submit="commentArticle()">
         <label for="selectOpinion">Opinion:</label><br>
         <select name="selectOpinion" ng-model="comment.opinion">
@@ -53,6 +74,15 @@
         <input type="text" placeholder="Source Tags" ng-model="comment.source.tags"><br>
         <button>Add Comment</button>
       </form>
+    </div>
+  </div>
+
+  <div class="subcontainer">
+    <div class="document">
+      <h1>Article</h1>
+      <iframe ng-src="{{website}}"></iframe>
+      <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+      {{ article }} -->
     </div>
   </div>
 

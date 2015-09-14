@@ -1,12 +1,17 @@
 angular.module('thesis.document', [])
 
-.controller('DocumentCtrl', function ($scope, Articles, User, $location, $sce) {
+.controller('DocumentCtrl', function ($scope, Articles, User, $filter, $location, $sce) {
   
-  // $scope.detailFrame= $sce.trustAsResourceUrl("http://www.bbc.com/news/world-middle-east-34226003");
-
   $scope.enableComment = false;
   $scope.toggleCommentArticle = function() {
+    $scope.enableViewRelatedArticles = false;
     $scope.enableComment = !$scope.enableComment;
+  };
+
+  $scope.enableViewRelatedArticles = false;
+  $scope.toggleRelatedArticles = function() {
+    $scope.enableComment = false;
+    $scope.enableViewRelatedArticles = !$scope.enableViewRelatedArticles;
   };
 
   $scope.getDocument = function() {
@@ -46,5 +51,56 @@ angular.module('thesis.document', [])
       alert("must provide an opinion or a related source");
     }
   };
+  
+  // $scope.checkSupporting = false;
+  // $scope.checkUndermining = false;
+  var orderBy = $filter('orderBy');
 
+  $scope.order = function(predicate, reserve) {
+    $scope.relatedArticles = orderBy($scope.relatedArticles, predicate);
+  };
+
+  $scope.includeSupporting = function() {
+    if (!$scope.checkSupporting) {
+      $scope.checkSupporting = true;
+      $scope.relatedArticles = [];
+      for (var i = 0; i < $scope.articlesInMemo.length; i++) {
+        if ($scope.articlesInMemo[i].relationship === "supporting") {
+          $scope.relatedArticles.push($scope.articlesInMemo[i]);
+        }
+      }
+    } else {
+      $scope.checkSupporting = false;
+      $scope.relatedArticles = $scope.articlesInMemo;
+    }
+  };
+
+  $scope.includeUndermining = function() {
+    if (!$scope.checkUndermining) {
+      $scope.checkUndermining = true;
+      $scope.relatedArticles = [];
+      for (var i = 0; i < $scope.articlesInMemo.length; i++) {
+        if ($scope.articlesInMemo[i].relationship === "undermining") {
+          $scope.relatedArticles.push($scope.articlesInMemo[i]);
+        }
+      }
+    } else {
+      $scope.checkUndermining = false;
+      $scope.relatedArticles = $scope.articlesInMemo;
+    }
+  };
+
+  $scope.getRelatedArticles = function() {
+    var docId = $location.$$path.slice(10);
+    Articles.getRelated(docId)
+      .then(function (articles) {
+        $scope.relatedArticles = articles;
+        $scope.articlesInMemo = $scope.relatedArticles;
+        $scope.order('-popularityIdx',false);
+      })
+      .catch(function (error) {
+        console.log("oops articles cannot be accessed");
+      });
+  };
+  $scope.getRelatedArticles();
 });
