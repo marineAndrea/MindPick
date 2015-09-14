@@ -4,4 +4,6 @@ module.exports = function(app) { // app === articlesRouter injected from middlew
   app.route('/')
     .get(articlesController.allArticles)
     .post(articlesController.addArticle);
+  app.route('/:id')
+    .get(articlesController.relatedArticles);
 };
