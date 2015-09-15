@@ -1,30 +1,32 @@
-<div class="container">
-
-  <div class="subcontainer">
-    <nav class="navigation">
-      <ul>
-        <li>
-          <a class="selected" href="#/articles">Articles</a>
-        </li>
-        <li>
-          <a href="#/signin">Sign In</a>
-        </li>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
       </ul>
-    </nav>
-  </div>
-
-  <div class="subcontainer">
-    <div class="signup">
-      <h1>signup</h1>
-      <form name="signupForm" ng-submit="signup()">
-        <input type="text" placeholder="Username" ng-model="user.username">
-        <input type="password" placeholder="Password" ng-model="user.password">
-        <input type="text" placeholder="Interests" ng-model="user.interests">
-        <input type="text" placeholder="Picture Url" ng-model="user.picture">
-        <input type="text" placeholder="Email" ng-model="user.email">
-        <button>signup</button>
-      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#/signin">Sign In</a></li>
+      </ul>
     </div>
   </div>
+</nav>
 
+
+<div class="container signup">
+  <form class="input-group" name="signupForm" ng-submit="signup()">
+    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="user.username">
+    <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" ng-model="user.password">
+    <input type="text" class="form-control" placeholder="Interests" aria-describedby="basic-addon1" ng-model="user.interests">
+    <input type="text" class="form-control" placeholder="Picture Url" aria-describedby="basic-addon1" ng-model="user.picture">
+    <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1" ng-model="user.email">
+    <button type="submit" class="btn btn-default">signup</button>
+  </form>
 </div>
