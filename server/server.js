@@ -10,6 +10,7 @@ mongoose.connect('marine:marine@ds035723.mongolab.com:35723/articles');
 require('./config/middleware.js')(app, express);
 
 // starts the server
-app.listen(8000);
-console.log('listening on port ' + 8000);
+// app.listen(8000);
+// console.log('listening on port ' + 8000);
+app.listen(process.env.PORT || 8000);
 
