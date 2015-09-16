@@ -24,7 +24,7 @@
 
 <div class="container documentNav">
   <ul class="nav nav-pills">
-    <li role="presentation" class="active" ng-click="toggleCommentArticle()"><a>Comment Article</a></li>
+    <li role="presentation" class="active" ng-click="toggleCommentArticle()"><a>Share your Opinion</a></li>
     <li role="presentation" class="active" ng-click="toggleRelatedArticles()"><a>View Related Articles</a></li>
   </ul>
 </div>
@@ -33,6 +33,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">Related Articles</div>
     <div class="panel-body">
+      <h5>You can sort the articles by date, popularity and controversy</h5>
+      <h5>The font is green when on average people find the article to be well-supported and red when they find it to be unsupported<h5>
+      <!-- <h5>You can view the sources that support the article or the ones that undermine it</h5> -->
       <div class="input-group"> 
         <span class="input-group-addon">Supporting Articles
           <input type="checkbox" aria-label="supporting articles" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()">
@@ -47,36 +50,36 @@
     <tr>
       <!-- <th>Relationship</th> -->
       <th><a href="" ng-click="order('date')">Date</a></th>
-      <th>Source</th>
+      <th>Related Articles</th>
       <th>Tags</th>
-      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-      <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity (1-10)</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy (0-10)</a></th>
+      <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
     </tr>
-    <tr ng-repeat="article in relatedArticles | filter:search:strict">
+    <tr ng-repeat="article in relatedArticles | filter:search:strict" ng-class="{supported: article.controversy.valence === 1, undermined: article.controversy.valence === -1}">
       <!-- <td>{{ article.relationship }}</td> -->
       <td>{{ article.date }}</td>
       <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
       <td>{{ article.tags }}</td>
       <td>{{ article.popularityIdx }}</td>
       <td>{{ article.controversy.idx }}</td>
-      <td>{{ article.controversy.valence }}</td>
+      <!-- <td>{{ article.controversy.valence }}</td> -->
     </tr>
   </table>
 </div>
 
 <div class="container commentContainer" ng-show="enableComment">
   <div class="panel panel-default">
-    <div class="panel-heading">Share your Opinion and/or provide your Source</div>
+    <div class="panel-heading">Share your Opinion and/or provide a related Source</div>
     <div class="panel-body">
       <form class="input-group commentArticle" name="commentArticleForm" ng-submit="commentArticle()">
         <select class="form-control commentSelect" name="selectOpinion" ng-model="comment.opinion">
-          <option value="supported">Supported</option>
-          <option value="notSupported">Undermined</option>
+          <option value="supported">This article is well-supported</option>
+          <option value="notSupported">This article is unsupported</option>
         </select>
-        <input type="text" class="form-control commentSelect" placeholder="Url" aria-describedby="basic-addon1" ng-model="comment.source.url">
-        <input type="text" class="form-control commentSelect" placeholder="Tags" aria-describedby="basic-addon1" ng-model="comment.source.tags">
-        <button type="submit" class="btn btn-default btn-custom">Add Comment</button>
+        <input type="text" class="form-control commentSelect" placeholder="Related article url" aria-describedby="basic-addon1" ng-model="comment.source.url">
+        <input type="text" class="form-control commentSelect" placeholder="Tags that describe the related article" aria-describedby="basic-addon1" ng-model="comment.source.tags">
+        <button type="submit" class="btn btn-default btn-custom">Submit</button>
       </form>
     </div>
   </div>

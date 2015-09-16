@@ -28,9 +28,9 @@
     <div class="panel-heading">Choose an article to read</div>
       <!-- <div class="input-group"> --> 
         <!-- <span class="input-group-addon" id="basic-addon1">Topic</span> -->
-        <h5>You can filter the articles by topic</h5>
-        <h5>You can sort the articles by date, their popularity and how controversial they are</h5>
-        <h5>The font is green when the article is supported, red when it is undermined<h5>
+        <h5>You can sort the articles by date, popularity and controversy</h5>
+        <h5>The font is green when on average people find the article to be well-supported and red when they find it to be unsupported<h5>
+        <h5>You can filter the articles by topic, by entering a tag below</h5>
         <input type="text" class="form-control" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
       <!-- </div> -->
   </div>
@@ -39,8 +39,8 @@
       <th><a href="" ng-click="order('date')">Date</a></th>
       <th>Source</th>
       <th>Tags</th>
-      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity (1-10)</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy (0-10)</a></th>
       <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
     </tr>
     <tr ng-repeat="article in articles | filter:search:strict" ng-class="{supported: article.controversy.valence === 1, undermined: article.controversy.valence === -1}">

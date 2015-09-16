@@ -42,7 +42,7 @@
     <div class="panel-heading">Add an Article</div>
     <div class="panel-body">
       <form class="input-group uploadArticle" name="uploadArticleForm" ng-submit="uploadArticle()">
-        <input type="text" class="form-control profileInput" placeholder="Article's url" aria-describedby="basic-addon1" ng-model="article.url">
+        <input type="text" class="form-control profileInput" placeholder="Article url" aria-describedby="basic-addon1" ng-model="article.url">
         <input type="text" class="form-control profileInput" placeholder="Tags that describe the article" aria-describedby="basic-addon1" ng-model="article.tags">
         <button type="submit" class="btn btn-default btn-custom">Add</button>
       </form>
@@ -54,20 +54,20 @@
   <div class="panel panel-default">
     <div class="panel-heading">Your list of Articles</div>
     <div class="panel-body">
-      <h5>You can filter your articles by topic or journal</h5>
-      <h5>You can filter the ones that you have added and/or commented</h5>
-      <h5>You can sort the articles by date, their popularity and how controversial they are</h5>
+      <!-- <h5>You can filter your articles by topic or journal</h5>
+      <h5>You can filter the ones that you have added and/or commented</h5> -->
+      <h5>You can sort the articles by date, popularity and controversy</h5>
       <h5>Rows are highlighted when your opinion shows dissonance with consensus among the community<h5>
-      <h5>The font is green when the article is supported, red when it is undermined<h5>
+      <h5>The font is green when on average people find the article to be well-supported and red when they find it to be unsupported<h5>
       <div class="input-group"> 
         <span class="input-group-addon" id="basic-addon1">Topic</span>
         <input type="text" class="form-control try" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
         <span class="input-group-addon" id="basic-addon1">Source</span>
         <input type="text" class="form-control" placeholder="Search by Journal" aria-describedby="basic-addon1" ng-model="search.journal">
-        <span class="input-group-addon">Added
+        <span class="input-group-addon">I Added
           <input type="checkbox" aria-label="uploaded articles" ng-click="includeUploaded()">
         </span>
-        <span class="input-group-addon">Commented 
+        <span class="input-group-addon">I Commented 
           <input type="checkbox" aria-label="commented articles" ng-click="includeCommented()">
         </span>
       </div>
@@ -80,8 +80,8 @@
       <th>Tags</th>
       <!-- <th>Uploaded</th>
       <th>Commented</th> -->
-      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity (1-10)</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy (0-10)</a></th>
       <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
       <!-- <th><a href="" ng-click="order('-userValence')">Your Opinion</a></th> -->
       <!-- <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th> -->
