@@ -35,10 +35,10 @@
     <div class="panel-body">
       <div class="input-group"> 
         <span class="input-group-addon">Supporting Articles
-          <input type="checkbox" aria-label="uploaded articles" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()">
+          <input type="checkbox" aria-label="supporting articles" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()">
         </span>
         <span class="input-group-addon">Undermining Articles
-          <input type="checkbox" aria-label="uploaded articles" ng-model="underChecked" ng-disabled="supChecked" ng-click="includeUndermining()">
+          <input type="checkbox" aria-label="undermining articles" ng-model="underChecked" ng-disabled="supChecked" ng-click="includeUndermining()">
         </span>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <th>Tags</th>
       <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
       <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-      <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
+      <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
     </tr>
     <tr ng-repeat="article in relatedArticles | filter:search:strict">
       <!-- <td>{{ article.relationship }}</td> -->
@@ -60,7 +60,7 @@
       <td>{{ article.tags }}</td>
       <td>{{ article.popularityIdx }}</td>
       <td>{{ article.controversy.idx }}</td>
-      <!-- <td>{{ article.controversy.valence }}</td> -->
+      <td>{{ article.controversy.valence }}</td>
     </tr>
   </table>
 </div>
