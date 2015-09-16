@@ -187,6 +187,10 @@ h3, h4 {
   background-color: #4E6F70;
 }
 
+.articlesContainer h2 {
+  text-align: center;
+  padding-bottom: 4%;
+}
 
 /* **************************************DOCUMENT************************************** */
 

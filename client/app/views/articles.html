@@ -23,10 +23,14 @@
 </nav>
 
 <div class="container articlesContainer">
+  <h2>All News Articles</h2>
   <div class="panel panel-default">
-    <div class="panel-heading">Give a topic and choose an article to Read</div>
+    <div class="panel-heading">Choose an article to read</div>
       <!-- <div class="input-group"> --> 
         <!-- <span class="input-group-addon" id="basic-addon1">Topic</span> -->
+        <h5>You can filter the articles by topic</h5>
+        <h5>You can sort the articles by date, their popularity and how controversial they are</h5>
+        <h5>The font is green when the article is supported, red when it is undermined<h5>
         <input type="text" class="form-control" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
       <!-- </div> -->
   </div>
@@ -37,15 +41,15 @@
       <th>Tags</th>
       <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
       <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-      <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
+      <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
     </tr>
-    <tr ng-repeat="article in articles | filter:search:strict">
+    <tr ng-repeat="article in articles | filter:search:strict" ng-class="{supported: article.controversy.valence === 1, undermined: article.controversy.valence === -1}">
       <td>{{ article.date }}</td>
       <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
       <td>{{ article.tags }}</td>
       <td>{{ article.popularityIdx }}</td>
       <td>{{ article.controversy.idx }}</td>
-      <td>{{ article.controversy.valence }}</td>
+      <!-- <td>{{ article.controversy.valence }}</td> -->
     </tr>
   </table>
 </div>
