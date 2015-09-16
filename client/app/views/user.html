@@ -10,12 +10,11 @@
       </button>
       <!-- <a class="navbar-brand" href="#">Brand</a> -->
     </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="#/articles">Articles</a></li>
-        <li class="active"><a href="#/users/profile">Profile <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="#/users/profile">Profile<span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/articles">Logout</a></li>
@@ -24,13 +23,13 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
-  <div class="media profileInfo">
+<div class="container profileContainer">
+  <div class="media">
   <div class="media-body">
-    <h4 class="media-heading">{{ user.username }}</h4>
-    <p class="email"> {{ user.email }} </p> <!-- make it a link -->
-    <h4 class="media-heading">Interests</h4>
-    <p class="interests"> {{ user.interests }}</p> <!-- ng-repeat -->
+    <h1 class="media-heading">{{ user.username }}</h1>
+    <h3 class="media-heading">Interests</h3>
+    <h4 class="interests"> {{ user.interests }}</h4> <!-- ng-repeat -->
+    <h4 class="email"> {{ user.email }} </h4> <!-- make it a link -->
   </div>
   <div class="media-right">
     <a href="#">
@@ -38,57 +37,62 @@
     </a>
   </div>
   </div>
-</div>
 
-<div class="container">
-  <form class="input-group uploadArticle" name="uploadArticleForm" ng-submit="uploadArticle()">
-    <input type="text" class="form-control" placeholder="Url" aria-describedby="basic-addon1" ng-model="article.url">
-    <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="article.tags">
-    <button type="submit" class="btn btn-default">Upload Article</button>
-  </form>
-</div>
-
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">Articles</div>
-    <div class="input-group"> 
-      <span class="input-group-addon" id="basic-addon1">Topic</span>
-      <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="search.tags">
-      <span class="input-group-addon" id="basic-addon1">Source</span>
-      <input type="text" class="form-control" placeholder="Journal" aria-describedby="basic-addon1" ng-model="search.journal">
-      <span class="input-group-addon">Uploaded 
-        <input type="checkbox" aria-label="uploaded articles" ng-click="includeUploaded()">
-      </span>
-      <span class="input-group-addon">Commented 
-        <input type="checkbox" aria-label="commented articles" ng-click="includeCommented()">
-      </span>
+  <div class="panel panel-default form">
+    <div class="panel-heading">Add an Article</div>
+    <div class="panel-body">
+      <form class="input-group uploadArticle" name="uploadArticleForm" ng-submit="uploadArticle()">
+        <input type="text" class="form-control profileInput" placeholder="Article's url" aria-describedby="basic-addon1" ng-model="article.url">
+        <input type="text" class="form-control profileInput" placeholder="Tags that describe the article" aria-describedby="basic-addon1" ng-model="article.tags">
+        <button type="submit" class="btn btn-default btn-custom">Add</button>
+      </form>
     </div>
-    <table class="table profileArticlesTable">
-      <tr>
-        <th><a href="" ng-click="order('date')">Date</a></th>
-        <th>Source</th>
-        <th>Tags</th>
-        <!-- <th>Uploaded</th>
-        <th>Commented</th> -->
-        <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-        <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-        <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
-        <th><a href="" ng-click="order('-userValence')">Your Opinion</a></th> -->
-        <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th>
-      </tr>
-
-      <tr ng-repeat="article in userArticles | filter:search:strict">
-        <td>{{ article.date }}</td>
-        <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
-        <td>{{ article.tags }}</td>
-        <!-- <td>{{ article.uploaded }}</td>
-        <td>{{ article.commented }}</td> -->
-        <td>{{ article.popularityIdx }}</td>
-        <td>{{ article.controversy.idx }}</td>
-        <!-- <td>{{ article.controversy.valence }}</td>
-        <td>{{ article.userValence }}</td> -->
-        <td>{{ article.dissonance }}</td>
-      </tr>
-    </table>
   </div>
+</div>
+
+<div class="container profileArticlesContainer">
+  <div class="panel panel-default">
+    <div class="panel-heading">Your list of Articles</div>
+    <div class="panel-body">
+      <div class="input-group"> 
+        <span class="input-group-addon" id="basic-addon1">Topic</span>
+        <input type="text" class="form-control try" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
+        <span class="input-group-addon" id="basic-addon1">Source</span>
+        <input type="text" class="form-control" placeholder="Search by Journal" aria-describedby="basic-addon1" ng-model="search.journal">
+        <span class="input-group-addon">Uploaded 
+          <input type="checkbox" aria-label="uploaded articles" ng-click="includeUploaded()">
+        </span>
+        <span class="input-group-addon">Commented 
+          <input type="checkbox" aria-label="commented articles" ng-click="includeCommented()">
+        </span>
+      </div>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <tr>
+      <th><a href="" ng-click="order('date')">Date</a></th>
+      <th>Source</th>
+      <th>Tags</th>
+      <!-- <th>Uploaded</th>
+      <th>Commented</th> -->
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+      <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th>
+      <th><a href="" ng-click="order('-userValence')">Your Opinion</a></th> -->
+      <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th>
+    </tr>
+
+    <tr ng-repeat="article in userArticles | filter:search:strict">
+      <td>{{ article.date }}</td>
+      <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
+      <td>{{ article.tags }}</td>
+      <!-- <td>{{ article.uploaded }}</td>
+      <td>{{ article.commented }}</td> -->
+      <td>{{ article.popularityIdx }}</td>
+      <td>{{ article.controversy.idx }}</td>
+      <!-- <td>{{ article.controversy.valence }}</td>
+      <td>{{ article.userValence }}</td> -->
+      <td>{{ article.dissonance }}</td>
+    </tr>
+  </table>
 </div>

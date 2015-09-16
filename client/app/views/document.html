@@ -22,64 +22,68 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container documentNav">
   <ul class="nav nav-pills">
     <li role="presentation" class="active" ng-click="toggleCommentArticle()"><a>Comment Article</a></li>
     <li role="presentation" class="active" ng-click="toggleRelatedArticles()"><a>View Related Articles</a></li>
   </ul>
 </div>
 
-<div class="container relatedArticles" ng-show="enableViewRelatedArticles">
+<div class="container relatedArticlesContainer" ng-show="enableViewRelatedArticles">
   <div class="panel panel-default">
     <div class="panel-heading">Related Articles</div>
-    <div class="input-group"> 
-      <span class="input-group-addon">Supporting
-        <input type="checkbox" aria-label="uploaded articles" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()">
-      </span>
-      <span class="input-group-addon">Undermining
-        <input type="checkbox" aria-label="uploaded articles" ng-model="underChecked" ng-disabled="supChecked" ng-click="includeUndermining()">
-      </span>
+    <div class="panel-body">
+      <div class="input-group"> 
+        <span class="input-group-addon">Supporting Articles
+          <input type="checkbox" aria-label="uploaded articles" ng-model="supChecked" ng-disabled="underChecked" ng-click="includeSupporting()">
+        </span>
+        <span class="input-group-addon">Undermining Articles
+          <input type="checkbox" aria-label="uploaded articles" ng-model="underChecked" ng-disabled="supChecked" ng-click="includeUndermining()">
+        </span>
+      </div>
     </div>
-    <table class="table relatedArticlesTable">
-      <tr>
-        <!-- <th>Relationship</th> -->
-        <th><a href="" ng-click="order('date')">Date</a></th>
-        <th>Source</th>
-        <th>Tags</th>
-        <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-        <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-        <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
-      </tr>
-      <tr ng-repeat="article in relatedArticles | filter:search:strict">
-        <!-- <td>{{ article.relationship }}</td> -->
-        <td>{{ article.date }}</td>
-        <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
-        <td>{{ article.tags }}</td>
-        <td>{{ article.popularityIdx }}</td>
-        <td>{{ article.controversy.idx }}</td>
-        <!-- <td>{{ article.controversy.valence }}</td> -->
-      </tr>
-    </table>
   </div>
+  <table class="table table-hover">
+    <tr>
+      <!-- <th>Relationship</th> -->
+      <th><a href="" ng-click="order('date')">Date</a></th>
+      <th>Source</th>
+      <th>Tags</th>
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+      <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
+    </tr>
+    <tr ng-repeat="article in relatedArticles | filter:search:strict">
+      <!-- <td>{{ article.relationship }}</td> -->
+      <td>{{ article.date }}</td>
+      <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
+      <td>{{ article.tags }}</td>
+      <td>{{ article.popularityIdx }}</td>
+      <td>{{ article.controversy.idx }}</td>
+      <!-- <td>{{ article.controversy.valence }}</td> -->
+    </tr>
+  </table>
 </div>
 
-<div class="container" ng-show="enableComment">
+<div class="container commentContainer" ng-show="enableComment">
   <div class="panel panel-default">
-    <div class="panel-heading">Opinion / Source</div>
-    <form class="input-group commentArticle" name="commentArticleForm" ng-submit="commentArticle()">
-      <select class="form-control" name="selectOpinion" ng-model="comment.opinion">
-        <option value="supported">Supported</option>
-        <option value="notSupported">Undermined</option>
-      </select>
-      <input type="text" class="form-control" placeholder="Url" aria-describedby="basic-addon1" ng-model="comment.source.url">
-      <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="comment.source.tags">
-      <button type="submit" class="btn btn-default">Add Comment</button>
-    </form>
+    <div class="panel-heading">Share your Opinion and/or provide your Source</div>
+    <div class="panel-body">
+      <form class="input-group commentArticle" name="commentArticleForm" ng-submit="commentArticle()">
+        <select class="form-control commentSelect" name="selectOpinion" ng-model="comment.opinion">
+          <option value="supported">Supported</option>
+          <option value="notSupported">Undermined</option>
+        </select>
+        <input type="text" class="form-control commentSelect" placeholder="Url" aria-describedby="basic-addon1" ng-model="comment.source.url">
+        <input type="text" class="form-control commentSelect" placeholder="Tags" aria-describedby="basic-addon1" ng-model="comment.source.tags">
+        <button type="submit" class="btn btn-default btn-custom">Add Comment</button>
+      </form>
+    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="embed-responsive embed-responsive-16by9 document">
+<div class="container documentContainer">
+  <div class="embed-responsive embed-responsive-16by9">
     <iframe class="embed-responsive-item" ng-src="{{website}}"></iframe>
     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</p>
     {{ article }} -->

@@ -10,7 +10,7 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
+        <li><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/signup">Sign Up</a></li>
@@ -19,11 +19,12 @@
   </div>
 </nav>
 
-<div class="container signin">
-  <form class="input-group" name="signinForm" ng-submit="signin()">
-    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="user.username">
-    <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" ng-model="user.password">
-    <button type="submit" class="btn btn-default">signin</button>
-  </form>
+<div class="container bgImage">
+  <div class="container signin">
+    <form class="input-group" name="signinForm" ng-submit="signin()">
+      <input type="text" class="form-control signinInput" placeholder="Username" aria-describedby="basic-addon1" ng-model="user.username">
+      <input type="password" class="form-control signinInput" placeholder="Password" aria-describedby="basic-addon1" ng-model="user.password">
+      <button type="submit" class="btn btn-default btn-custom">signin</button>
+    </form>
+  </div>
 </div>
-

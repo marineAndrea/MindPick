@@ -22,30 +22,29 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container articlesContainer">
   <div class="panel panel-default">
-    <div class="panel-heading">Articles</div>
-      <div class="input-group"> 
-        <span class="input-group-addon" id="basic-addon1">Topic</span>
-        <input type="text" class="form-control" placeholder="Tags" aria-describedby="basic-addon1" ng-model="search.tags">
-      </div>
-      <table class="table profileArticlesTable">
-        <tr>
-          <th><a href="" ng-click="order('date')">Date</a></th>
-          <th>Source</th>
-          <th>Tags</th>
-          <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
-          <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
-        </tr>
-        <tr ng-repeat="article in articles | filter:search:strict">
-          <td>{{ article.date }}</td>
-          <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
-          <td>{{ article.tags }}</td>
-          <td>{{ article.popularityIdx }}</td>
-          <td>{{ article.controversy.idx }}</td>
-          <!-- <td>{{ article.controversy.valence }}</td> -->
-        </tr>
-      </table>
-    </div>
+    <div class="panel-heading">Give a topic and choose an article to Read</div>
+      <!-- <div class="input-group"> --> 
+        <!-- <span class="input-group-addon" id="basic-addon1">Topic</span> -->
+        <input type="text" class="form-control" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
+      <!-- </div> -->
   </div>
+  <table class="table table-hover">
+    <tr>
+      <th><a href="" ng-click="order('date')">Date</a></th>
+      <th>Source</th>
+      <th>Tags</th>
+      <th><a href="" ng-click="order('-popularityIdx')">Popularity</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy</a></th>
+    </tr>
+    <tr ng-repeat="article in articles | filter:search:strict">
+      <td>{{ article.date }}</td>
+      <td><a ng-href="#/document/{{article._id}}">{{ article.journal }}</a></td>
+      <td>{{ article.tags }}</td>
+      <td>{{ article.popularityIdx }}</td>
+      <td>{{ article.controversy.idx }}</td>
+      <!-- <td>{{ article.controversy.valence }}</td> -->
+    </tr>
+  </table>
 </div>

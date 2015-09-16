@@ -10,7 +10,7 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
+        <li><a href="#/articles">Articles <span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/signin">Sign In</a></li>
@@ -19,14 +19,15 @@
   </div>
 </nav>
 
-
-<div class="container signup">
-  <form class="input-group" name="signupForm" ng-submit="signup()">
-    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="user.username">
-    <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" ng-model="user.password">
-    <input type="text" class="form-control" placeholder="Interests" aria-describedby="basic-addon1" ng-model="user.interests">
-    <input type="text" class="form-control" placeholder="Picture Url" aria-describedby="basic-addon1" ng-model="user.picture">
-    <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1" ng-model="user.email">
-    <button type="submit" class="btn btn-default">signup</button>
-  </form>
+<div class="container bgImage">
+  <div class="container signup">
+    <form class="input-group" name="signupForm" ng-submit="signup()">
+      <input type="text" class="form-control signupInput" placeholder="Username" aria-describedby="basic-addon1" ng-model="user.username">
+      <input type="password" class="form-control signupInput" placeholder="Password" aria-describedby="basic-addon1" ng-model="user.password">
+      <input type="text" class="form-control signupInput" placeholder="Interests" aria-describedby="basic-addon1" ng-model="user.interests">
+      <input type="text" class="form-control signupInput" placeholder="Profile Picture (paste url)" aria-describedby="basic-addon1" ng-model="user.picture">
+      <input type="text" class="form-control signupInput" placeholder="Email" aria-describedby="basic-addon1" ng-model="user.email">
+      <button type="submit" class="btn btn-default btn-custom">signup</button>
+    </form>
+  </div>
 </div>
