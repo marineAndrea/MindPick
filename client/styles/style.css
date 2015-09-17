@@ -136,6 +136,20 @@ button {
   background-image: url("background2.gif");
 }
 
+/* **************************************ACROSS VIEWS************************************** */
+
+.instructions {
+  border: 3px solid #C9A3FF;
+  padding: 2% 2%;
+  margin-bottom: 2%;
+  font-weight: bold;
+}
+
+.input-group-addon {
+  color: #30302E;
+  font-weight: bold;
+}
+
 /* **************************************PROFILE************************************** */
 
 h1 {
@@ -227,3 +241,4 @@ iframe {
   width: 80%;
   height: 400px;
 }
+

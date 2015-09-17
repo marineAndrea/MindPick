@@ -8,7 +8,7 @@ angular.module('thesis.auth', [])
       .then(function (token) {
         $window.localStorage.setItem('com.thesis', token);
         $window.localStorage.setItem('com.thesis.username', $scope.user.username);
-        $location.path('/articles'); // change to profile ?
+        $location.path('/users/profile');
       })
       .catch(function (error) {
         console.error(error);
@@ -20,7 +20,7 @@ angular.module('thesis.auth', [])
       .then(function (token) {
         $window.localStorage.setItem('com.thesis', token);
         $window.localStorage.setItem('com.thesis.username', $scope.user.username);
-        $location.path('/articles');
+        $location.path('/users/profile');
       })
       .catch(function (error) {
         console.error(error);

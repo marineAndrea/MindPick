@@ -104,7 +104,7 @@ module.exports = {
     }
     leastCtr = (nbSupported + nbOffBase);
     diff = nbSupported - nbOffBase;
-    ctrObj.idx = Math.round((scale / leastCtr) * (leastCtr - Math.abs(diff)));
+    ctrObj.idx = Math.round(1 + ((scale - 1) / leastCtr) * (leastCtr - Math.abs(diff)));
     if (diff > 0) {
       ctrObj.valence = 1;
     } else if (diff < 0) {

@@ -17,7 +17,7 @@
         <li class="active"><a href="#/users/profile">Profile<span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/articles">Logout</a></li>
+        <li><a href="#/signin">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -54,11 +54,13 @@
   <div class="panel panel-default">
     <div class="panel-heading">Your list of Articles</div>
     <div class="panel-body">
-      <!-- <h5>You can filter your articles by topic or journal</h5>
-      <h5>You can filter the ones that you have added and/or commented</h5> -->
-      <h5>You can sort the articles by date, popularity and controversy</h5>
-      <h5>Rows are highlighted when your opinion shows dissonance with consensus among the community<h5>
-      <h5>The font is green when on average people find the article to be well-supported and red when they find it to be unsupported<h5>
+      <!-- <p>You can filter your articles by topic or journal</p>
+      <p>You can filter the ones that you have added and/or commented</p> -->
+      <div class="instructions">
+        <p>You can sort the articles by date, popularity and controversy</p>
+        <p>Rows are highlighted when your opinion shows dissonance with consensus among the community</p>
+        <p>The font is green when on average people find the article to be well-supported and red when they find it to be unsupported</p>
+      </div>
       <div class="input-group"> 
         <span class="input-group-addon" id="basic-addon1">Topic</span>
         <input type="text" class="form-control try" placeholder="Search by Tag" aria-describedby="basic-addon1" ng-model="search.tags">
@@ -81,7 +83,7 @@
       <!-- <th>Uploaded</th>
       <th>Commented</th> -->
       <th><a href="" ng-click="order('-popularityIdx')">Popularity (1-10)</a></th>
-      <th><a href="" ng-click="order('-controversy.idx')">Controversy (0-10)</a></th>
+      <th><a href="" ng-click="order('-controversy.idx')">Controversy (1-10)</a></th>
       <!-- <th><a href="" ng-click="order('-controversy.valence')">Valence</a></th> -->
       <!-- <th><a href="" ng-click="order('-userValence')">Your Opinion</a></th> -->
       <!-- <th><a href="" ng-click="order('-dissonance')">Dissonance</a></th> -->

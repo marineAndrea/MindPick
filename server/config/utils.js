@@ -27,7 +27,7 @@ var createNewArticle = function(url, journal, tags, minComments, maxComments) {
     minmaxComments: [minComments, maxComments],
     comments: [],
     popularityIdx: 1,
-    controversy: {idx: 0, valence: 0}
+    controversy: {idx: 1, valence: 0}
   };
   // save article into Articles table
   console.log('+++++++++++++++++++++newArticle', newArticle);
