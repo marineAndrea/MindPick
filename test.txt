@@ -38,7 +38,3 @@ source3 0
 source4
 source6
 source7
-
-test controversy:
-then have me opinion of each even source +
-and she - and a second time - for 2

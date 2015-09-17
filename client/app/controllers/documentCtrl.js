@@ -1,6 +1,6 @@
 angular.module('thesis.document', [])
 
-.controller('DocumentCtrl', function ($scope, Articles, User, $filter, $location, $sce) {
+.controller('DocumentCtrl', function ($scope, Articles, User, Auth, $filter, $location, $sce) {
   
   $scope.enableComment = false;
   $scope.toggleCommentArticle = function() {
@@ -27,28 +27,33 @@ angular.module('thesis.document', [])
   $scope.getDocument();
 
   $scope.comment = {};
-  $scope.commentArticle = function() {    
-    // send request only if an opinion or a source is provided
-    if ($scope.comment.opinion || $scope.comment.source) {
-      // if url but no tags or tags but no url provided alert user
-      if ($scope.comment.source && !($scope.comment.source.url && $scope.comment.source.tags)) {
-        alert("must provide both tags and url");
-      } else {
-        $scope.comment.articleId = $location.url().slice(10);
-        // get username
-        $scope.comment.username = User.getUsername();
-        // send comment.opinion to server
-        Articles.addComment($scope.comment)
-          .then(function (articles) {
-            $scope.comment = null;
-            $location.path('/users/profile');
-          })
-          .catch(function(err) {
-            console.log("oops cannot comment article");
-          });
-      }
+  $scope.commentArticle = function() {
+    if (!Auth.isAuth()) {
+      alert("you must sign in to provide an opinion on the article");
+      $location.path('/signin');
     } else {
-      alert("must provide an opinion or a related source");
+      // send request only if an opinion or a source is provided
+      if ($scope.comment.opinion || $scope.comment.source) {
+        // if url but no tags or tags but no url provided alert user
+        if ($scope.comment.source && !($scope.comment.source.url && $scope.comment.source.tags)) {
+          alert("you must provide both a url and tags");
+        } else {
+          $scope.comment.articleId = $location.url().slice(10);
+          // get username
+          $scope.comment.username = User.getUsername();
+          // send comment.opinion to server
+          Articles.addComment($scope.comment)
+            .then(function (articles) {
+              $scope.comment = null;
+              $location.path('/users/profile');
+            })
+            .catch(function(err) {
+              console.log("oops cannot comment article");
+            });
+        }
+      } else {
+        alert("you must provide an opinion or a related source");
+      }
     }
   };
   

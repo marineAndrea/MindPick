@@ -26,7 +26,6 @@ angular.module('thesis', [
     .when('/document/:id', {
       templateUrl: 'app/views/document.html',
       controller: 'DocumentCtrl',
-      authenticate: true
     })
     .when('/users/profile', {
       templateUrl: 'app/views/user.html',
@@ -34,7 +33,7 @@ angular.module('thesis', [
       authenticate: true
     })
     .otherwise({
-      redirectTo: '/articles'
+      redirectTo: '/signin'
     });
 })
 

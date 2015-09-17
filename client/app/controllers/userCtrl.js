@@ -36,7 +36,7 @@ angular.module('thesis.user', [])
           console.log("oops cannot upload article");
         });
     } else {
-      alert("must provide both url and tags");
+      alert("you must provide both a url and tags");
     }
   };
   

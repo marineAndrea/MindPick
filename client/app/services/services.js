@@ -1,5 +1,3 @@
-//TODO SIGNOUT
-
 angular.module('thesis.services', [])
 
 .factory('Articles', function ($http) { 

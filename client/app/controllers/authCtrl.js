@@ -2,8 +2,13 @@ angular.module('thesis.auth', [])
 
 .controller('AuthCtrl', function ($scope, $window, $location, Auth) {
   $scope.user = {};
+  
+  if ($location.$$path !== "/signup") {
+    Auth.signout();
+  }
 
   $scope.signin = function () {
+    // Auth.signout();
     Auth.signin($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.thesis', token);
