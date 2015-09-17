@@ -31,7 +31,7 @@ table {
 }
 
 th {
-  color: #53A65F;
+  /*color: #53A65F;*/
   background-color: #F2F2F2;
 }
 
@@ -124,30 +124,13 @@ button {
   text-align: center;
   padding: 20px 20px;
   background-color: #476656;
+  background-color: #CCD9D1;
 }
-.signin {
-  background-color: #4E6F70; 
-}
-
 
 .bgImage {
   width: 100%;
   height:100%;
   background-image: url("background2.gif");
-}
-
-/* **************************************ACROSS VIEWS************************************** */
-
-.instructions {
-  border: 3px solid #C9A3FF;
-  padding: 2% 2%;
-  margin-bottom: 2%;
-  font-weight: bold;
-}
-
-.input-group-addon {
-  color: #30302E;
-  font-weight: bold;
 }
 
 /* **************************************PROFILE************************************** */
@@ -242,3 +225,26 @@ iframe {
   height: 400px;
 }
 
+/* **************************************ACROSS VIEWS************************************** */
+
+.instructions {
+  border: 3px solid #C9A3FF;
+  padding: 2% 2%;
+  margin-bottom: 2%;
+  font-weight: bold;
+}
+
+.input-group-addon {
+  color: #30302E;
+  font-weight: bold;
+}
+
+.profileContainer, .articlesContainer, .commentContainer, .relatedArticlesContainer, .signin, .signup {
+  /* can be treated like a fallback */
+  background-color: #476656;
+  /* will be "on top", if browser supports it */
+  background-image: linear-gradient(#476656, #4E6F70);
+  /* these will reset other properties, like background-position, but it does know what you mean */
+  background: #476656;
+  background: linear-gradient(#476656, #4E6F70);
+}
