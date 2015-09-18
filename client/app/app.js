@@ -1,6 +1,7 @@
 angular.module('thesis', [
   'thesis.services',
   'thesis.articles',
+  'thesis.graph',
   'thesis.document',
   'thesis.user',
   'thesis.auth',
@@ -21,11 +22,15 @@ angular.module('thesis', [
     })
     .when('/articles', {
       templateUrl: 'app/views/articles.html',
-      controller: 'ArticlesCtrl',
+      controller: 'ArticlesCtrl'
+    })
+    .when('/graph', {
+      templateUrl: 'app/views/graph.html',
+      controller: 'GraphCtrl'
     })
     .when('/document/:id', {
       templateUrl: 'app/views/document.html',
-      controller: 'DocumentCtrl',
+      controller: 'DocumentCtrl'
     })
     .when('/users/profile', {
       templateUrl: 'app/views/user.html',
