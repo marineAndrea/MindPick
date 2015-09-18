@@ -20,6 +20,16 @@ background-color: rgb(193, 206, 150);
 dark green
 background-color: rgb(104, 125, 119);*/
 
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
 body {
   font-family: "Trebuchet MS", arial, sans-serif;
   background-color: #30302E;
@@ -31,7 +41,6 @@ table {
 }
 
 th {
-  /*color: #53A65F;*/
   background-color: #F2F2F2;
 }
 
@@ -62,6 +71,12 @@ th {
 
 /* **************************************SPACING************************************** */
 
+.dThreeContainer {
+  margin-top: 4%;
+  padding-top: 2%;
+  text-align: center;
+  background-color: #CCD9D1;
+}
 
 .profileContainer, .profileArticlesContainer, .articlesContainer, .documentNav, .documentContainer, .relatedArticlesContainer, .commentContainer {
   margin-bottom: 2%;
@@ -79,23 +94,9 @@ button {
   margin: 15px 0;
 }
 
-/*.btn-custom {
-  background-color: hsl(145, 75%, 36%) !important;
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3ae280", endColorstr="#16a050");
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#3ae280), to(#16a050));
-  background-image: -moz-linear-gradient(top, #3ae280, #16a050);
-  background-image: -ms-linear-gradient(top, #3ae280, #16a050);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3ae280), color-stop(100%, #16a050));
-  background-image: -webkit-linear-gradient(top, #3ae280, #16a050);
-  background-image: -o-linear-gradient(top, #3ae280, #16a050);
-  background-image: linear-gradient(#3ae280, #16a050);
-  border-color: #16a050 #16a050 hsl(145, 75%, 31%);
-  color: #fff !important;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
-  -webkit-font-smoothing: antialiased;
-  font-weight: bold;
-}*/
+.btn-no-margin {
+  margin: 0 0;
+}
 
 .btn-custom {
   background-color: hsl(193, 32%, 48%) !important;
@@ -123,8 +124,8 @@ button {
   border-radius: 12px;
   text-align: center;
   padding: 20px 20px;
-  background-color: #476656;
-  background-color: #CCD9D1;
+  /*background-color: #476656;
+  background-color: #CCD9D1;*/
 }
 
 .bgImage {
@@ -153,14 +154,13 @@ h3, h4 {
   border-radius: 12px;
 }
 
-.profileContainer {
+/*.profileContainer {
   background-color: #476656;
 }
 
 .profileArticlesContainer {
   background-color: #4E6F70;
-
-}
+}*/
 
 .profileInput, .commentSelect, .signinInput, .signupInput {
   margin-top: 2%;
@@ -179,10 +179,10 @@ h3, h4 {
 }
 /* **************************************ARTICLES************************************** */
 
-.articlesContainer {
+/*.articlesContainer {
   background-color: #476656;
   background-color: #4E6F70;
-}
+}*/
 
 .articlesContainer h2 {
   text-align: center;
@@ -203,22 +203,17 @@ h3, h4 {
   background-color: #53A65F;
 }
 
-.input-group-addon {
-  font-size: 120%;
-  color: #30302E;
-}
-
 .documentContainer {
   background-color: #CCD9D1;
 }
 
-.commentContainer {
+/*.commentContainer {
   background-color: #476656;
 }
 
 .relatedArticlesContainer {
   background-color: #4E6F70;
-}
+}*/
 
 iframe {
   width: 80%;
