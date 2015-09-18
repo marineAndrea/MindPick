@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script type='text/javascript' src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"> </script>
+
 <style>
+  .node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
 
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
+  .link {
+    stroke: #999;
+    stroke-opacity: .6;
+  }
 
-.node .selected {
-  stroke: black;
-}
+ /* d3-tip {
+    line-height: 1;
+    color: black;
+  }*/
 
-.link {
-  stroke: #999;
-}
-
-.brush .extent {
-  fill-opacity: .1;
-  stroke: #fff;
-  shape-rendering: crispEdges;
-}
-
+  /*<script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>*/
 </style>
+
+
 <body>
-    <div align='center' id="d3_selectable_force_directed_graph"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="plot.js"></script>
-<script>selectableForceDirectedGraph();</script>
+  <div class="ui-widget">
+    <input id="search">
+    <button type="button" id="click">Search</button>
+  </div>
+<script src="./plot.js"></script>
+</body>
+
+
+
+
