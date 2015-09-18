@@ -2,24 +2,24 @@
   <head >
     <meta charset="utf-8" />
     <title>Thesis</title>
-    <!-- Latest compiled and minified CSS -->
-    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Optional theme -->
-    <link href="lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div ng-view></div>
+    <div class="view" ng-view></div>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="lib/d3/d3.min.js"></script>
+    <script src="lib/d3-tip/index.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+    <script src="app/services/services.js"></script>
     <script src="app/controllers/authCtrl.js"></script>
     <script src="app/controllers/articlesCtrl.js"></script>
+    <script src="app/controllers/graphCtrl.js"></script>
     <script src="app/controllers/documentCtrl.js"></script>
     <script src="app/controllers/userCtrl.js"></script>
-    <script src="app/services/services.js"></script>
     <script src="app/app.js"></script>
-    <!-- Latest compiled and minified JavaScript-->
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
