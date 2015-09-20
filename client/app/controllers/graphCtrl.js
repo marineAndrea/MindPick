@@ -1,13 +1,80 @@
 angular.module('thesis.graph', [])
 
-.controller('GraphCtrl', function ($scope) {
+.controller('GraphCtrl', function ($scope, Articles, $q) {
+
+  $scope.getAllRelatedArticles = function () {
+    // building input for d3:
+    // var obj = {}, nodesArr = [], linksArr = [];
+    // get all articles
+    // for each
+      // obj.url = idx
+      // push {name: url, topic: tags, size: popidx, color: ctridx} into nodesArr
+
+    // loop through nodesArr
+    // for each (idx1)
+      // get all realted articles and their relationship
+      // for each
+        // find url's idx in obj (idx2)
+        // push {source: idx2, target: idx1, color: relationship} into linksArr
+
+    // ideally have a table of tags with ids of articles that have the tag
+    // get these articles
+
+    var obj = {};
+    var nodesArr = [], linksArr = [], promises = [];
+    var id, url, idx1, idx2;
+    Articles.getAll()
+      .then(function (articles) {
+        for (var i = 0; i < articles.length; i++) {
+          // obj.url = i;
+          obj[articles[i].url] = i;
+          nodesArr.push({
+            name: articles[i]._id, //.$oid??
+            url: "#/document/" + articles[i]._id,
+            topic: articles[i].tags,
+            popIdx: articles[i].popularityIdx,
+            ctrIdx: articles[i].controversy.idx
+          });
+        }
+        for (var j = 0; j < nodesArr.length; j++) {
+          // idx1 = j;
+          id = nodesArr[j].name;
+          promises.push(Articles.getRelated(id));
+        }
+        $q.all(promises)
+          // Articles.getRelated(id)
+          .then(function (allRelatedArticles) {
+            for (i = 0; i < allRelatedArticles.length; i++) {
+              idx1 = i;
+              for (j = 0; j < allRelatedArticles[i].length; j++) {
+                url = allRelatedArticles[i][j].url;
+                relationship = allRelatedArticles[i][j].relationship;
+                idx2 = obj[url];
+                linksArr.push({
+                  source: idx2,
+                  target: idx1,
+                  relationship: relationship
+                });
+              }
+            }
+            $scope.graph = {nodes: nodesArr, links: linksArr};
+            // $scope.nodes = nodesArr;
+            // $scope.links = linksArr;
+            console.log('nodesArr', nodesArr);
+            console.log('linksArr', linksArr);
+            $scope.dthree();
+          });
+      });
+  };
+  $scope.getAllRelatedArticles();
+
   $scope.dthree = function() {
 
     var findColor = function(relationship) {
       if (relationship === "supporting") {
         return "#53A65F";
       } else if (relationship === "related") {
-        return "#30302E";  
+        return "#30302E";
       } else if (relationship === "undermining") {
         return "#A63822";
       }
@@ -22,8 +89,8 @@ angular.module('thesis.graph', [])
 
     // Set up the force layout
     var force = d3.layout.force()
-        .charge(-120)
-        .linkDistance(30)
+        .charge(-640)
+        .linkDistance(80)
         .size([width, height]);
 
     // Append a SVG to the body of the html page. Assign this SVG as an object to svg
@@ -64,22 +131,20 @@ angular.module('thesis.graph', [])
         //force.resume();
     }
 
-    d3.json("../../articles.json", function(error, graph) {
-      if (error) throw error;
+    // d3.json("../../articles.json", function(error, graph) {
+    //   if (error) throw error;
 
       // Creates the graph data structure out of the json data
-      force.nodes(graph.nodes)
-          .links(graph.links)
+      force.nodes($scope.graph.nodes)
+          .links($scope.graph.links)
           .start();
 
       // Create all the line svgs but without locations yet
       var link = svg.selectAll(".link")
-          .data(graph.links)
+          .data($scope.graph.links)
           .enter().append("line")
           .attr("class", "link")
-          // .style("stroke-width", function (d) {
-          //   return Math.sqrt(3);
-          // })
+          .style("stroke-width", 2)
           .style("marker-end",  "url(#suit)") // Modified line 
           .style("stroke", function(d) { 
             return findColor(d.relationship); 
@@ -87,12 +152,12 @@ angular.module('thesis.graph', [])
 
       // Do the same with the circles for the nodes - no 
       var node = svg.selectAll(".node")
-          .data(graph.nodes)
+          .data($scope.graph.nodes)
           .enter().append("circle")
           .attr("class", "node")
           // .attr("r", 8)
           .attr("r", function(d) { 
-            return 3 + d.popIdx; 
+            return 2 * d.popIdx + 5; 
           })
           .style("fill", function (d) {
           return colors[d.ctrIdx - 1];
@@ -135,8 +200,8 @@ angular.module('thesis.graph', [])
 
       // When the graph is huge it's nice to have some search functionality. We can use some jquery to create an autocompleting search box so the first thing is to add references to the jquery-ui libraries.
       var optArray = [];
-      for (var i = 0; i < graph.nodes.length - 1; i++) {
-          optArray.push(graph.nodes[i].topic);
+      for (var i = 0; i < $scope.graph.nodes.length - 1; i++) {
+          optArray.push($scope.graph.nodes[i].topic);
       }
       optArray = optArray.sort();
       $(function () {
@@ -152,15 +217,15 @@ angular.module('thesis.graph', [])
         .enter().append("marker")
           .attr("id", function(d) { return d; })
           .attr("viewBox", "0 -5 10 10")
-          .attr("refX", 25)
+          .attr("refX", 38)
           .attr("refY", 0)
           .attr("markerWidth", 6)
           .attr("markerHeight", 6)
           .attr("orient", "auto")
         .append("path")
           .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-          .style("stroke", "#4679BD")
-          .style("opacity", "0.6");
+          .style("stroke", "#30302E");
+          // .style("opacity", "0.6");
 
 
 
@@ -170,10 +235,10 @@ angular.module('thesis.graph', [])
       var toggle = 0;
       // Create an array logging what is connected to what
       var linkedByIndex = {};
-      for (i = 0; i < graph.nodes.length; i++) {
+      for (i = 0; i < $scope.graph.nodes.length; i++) {
           linkedByIndex[i + "," + i] = 1;
       }
-      graph.links.forEach(function (d) {
+      $scope.graph.links.forEach(function (d) {
           linkedByIndex[d.source.index + "," + d.target.index] = 1;
       });
       // This function looks up whether a pair are neighbours
@@ -200,7 +265,7 @@ angular.module('thesis.graph', [])
           }
       }
 
-    });
+    // });
 
 
     // When the graph is huge it's nice to have some search functionality. We can use some jquery to create an autocompleting search box so the first thing is to add references to the jquery-ui libraries.
@@ -228,5 +293,5 @@ angular.module('thesis.graph', [])
     });
   };
 
-  $scope.dthree();
+  // $scope.dthree();
 });
