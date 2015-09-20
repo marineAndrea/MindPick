@@ -158,7 +158,7 @@ module.exports = {
     return [article.minmaxComments[0], newMax];
   },
 
-  averageOpinions: function(arr) { // an array of tuples
+  averageOpinions: function(arr) {
     // change opinion into values
     // look for duplicates
     var obj = {};
