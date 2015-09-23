@@ -1,4 +1,4 @@
-angular.module('thesis.services', [])
+angular.module('MindPick.services', [])
 
 .factory('Articles', function ($http) { 
   var addArticle = function(article) {
@@ -69,7 +69,7 @@ angular.module('thesis.services', [])
 
 .factory('User', function ($http, $window) {
   var getUsername = function() {
-    return $window.localStorage.getItem('com.thesis.username'); // || User?
+    return $window.localStorage.getItem('com.MindPick.username'); // || User?
   };
 
   var getDissonance = function(articleValence, userValence) {
@@ -144,12 +144,12 @@ angular.module('thesis.services', [])
   };
 
   var isAuth = function() {
-    return !!$window.localStorage.getItem('com.thesis');
+    return !!$window.localStorage.getItem('com.MindPick');
   };
 
   var signout = function() {
-    $window.localStorage.removeItem('com.thesis');
-    $window.localStorage.removeItem('com.thesis.username');
+    $window.localStorage.removeItem('com.MindPick');
+    $window.localStorage.removeItem('com.MindPick.username');
     $location.path('/signin');
   };
 

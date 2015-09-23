@@ -1,10 +1,10 @@
-angular.module('thesis', [
-  'thesis.services',
-  'thesis.articles',
-  'thesis.graph',
-  'thesis.document',
-  'thesis.user',
-  'thesis.auth',
+angular.module('MindPick', [
+  'MindPick.services',
+  'MindPick.articles',
+  'MindPick.graph',
+  'MindPick.document',
+  'MindPick.user',
+  'MindPick.auth',
   'ngRoute'
 ])
 
@@ -49,7 +49,7 @@ angular.module('thesis', [
   // then add it to the header so the server can validate the request
   var attach = {
     request: function (object) {
-      var jwt = $window.localStorage.getItem('com.thesis'); // change name
+      var jwt = $window.localStorage.getItem('com.MindPick'); // change name
       if (jwt) {
         object.headers['x-access-token'] = jwt;
       }

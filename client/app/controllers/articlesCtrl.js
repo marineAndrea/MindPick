@@ -1,4 +1,4 @@
-angular.module('thesis.articles', [])
+angular.module('MindPick.articles', [])
 
 .controller('ArticlesCtrl', function ($scope, Articles, $filter) {
 

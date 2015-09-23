@@ -1,6 +1,6 @@
 // TODO be consistent with $location.path;
 
-angular.module('thesis.user', [])
+angular.module('MindPick.user', [])
 
 .controller('UserCtrl', function ($scope, User, Articles, $location, $filter) {
 

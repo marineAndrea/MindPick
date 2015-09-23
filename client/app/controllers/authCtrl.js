@@ -1,4 +1,4 @@
-angular.module('thesis.auth', [])
+angular.module('MindPick.auth', [])
 
 .controller('AuthCtrl', function ($scope, $window, $location, Auth) {
   $scope.user = {};
@@ -11,8 +11,8 @@ angular.module('thesis.auth', [])
     // Auth.signout();
     Auth.signin($scope.user)
       .then(function (token) {
-        $window.localStorage.setItem('com.thesis', token);
-        $window.localStorage.setItem('com.thesis.username', $scope.user.username);
+        $window.localStorage.setItem('com.MindPick', token);
+        $window.localStorage.setItem('com.MindPick.username', $scope.user.username);
         $location.path('/users/profile');
       })
       .catch(function (error) {
@@ -23,8 +23,8 @@ angular.module('thesis.auth', [])
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (token) {
-        $window.localStorage.setItem('com.thesis', token);
-        $window.localStorage.setItem('com.thesis.username', $scope.user.username);
+        $window.localStorage.setItem('com.MindPick', token);
+        $window.localStorage.setItem('com.MindPick.username', $scope.user.username);
         $location.path('/users/profile');
       })
       .catch(function (error) {

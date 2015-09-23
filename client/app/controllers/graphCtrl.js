@@ -1,4 +1,4 @@
-angular.module('thesis.graph', [])
+angular.module('MindPick.graph', [])
 
 .controller('GraphCtrl', function ($scope, Articles, $q) {
 

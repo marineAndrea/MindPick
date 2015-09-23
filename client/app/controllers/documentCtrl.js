@@ -1,4 +1,4 @@
-angular.module('thesis.document', [])
+angular.module('MindPick.document', [])
 
 .controller('DocumentCtrl', function ($scope, Articles, User, Auth, $filter, $location, $sce) {
   
