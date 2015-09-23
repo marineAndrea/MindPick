@@ -20,15 +20,6 @@ background-color: rgb(193, 206, 150);
 dark green
 background-color: rgb(104, 125, 119);*/
 
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
 
 body {
   font-family: "Trebuchet MS", arial, sans-serif;
@@ -56,6 +47,38 @@ th {
   color: #53A65F;
 }
 
+/* **************************************D3************************************** */
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+.d3-tip, .ctr {
+  color: #CCD9D1;
+}
+
+.instructions {
+  margin-bottom: 20px;
+}
+
+.legend {
+  text-align: right;
+  color: #CCD9D1;
+}
+
+.supportingConnection {
+  color: #00FF31;
+}
+
+.underminingConnection {
+  color: #FF3300;
+}
 
 /* **************************************NAV************************************** */
 
@@ -149,7 +172,7 @@ h3, h4 {
 }
 
 .picture {
-  width: 240px;
+  width: 200px;
   border: 3px solid #53A65F;
   border-radius: 12px;
 }
@@ -234,7 +257,7 @@ iframe {
   font-weight: bold;
 }
 
-.profileContainer, .articlesContainer, .commentContainer, .relatedArticlesContainer, .signin, .signup {
+.profileContainer, .articlesContainer, .commentContainer, .relatedArticlesContainer, .signin, .signup, .dThreeContainer {
   /* can be treated like a fallback */
   background-color: #476656;
   /* will be "on top", if browser supports it */

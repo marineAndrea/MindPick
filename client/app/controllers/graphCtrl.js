@@ -63,20 +63,24 @@ angular.module('thesis.graph', [])
             console.log('nodesArr', nodesArr);
             console.log('linksArr', linksArr);
             $scope.dthree();
+            $scope.legend();
           });
       });
   };
   $scope.getAllRelatedArticles();
 
+
   $scope.dthree = function() {
 
     var findColor = function(relationship) {
       if (relationship === "supporting") {
-        return "#53A65F";
+        // return "#53A65F";
+        return "#00FF31";
       } else if (relationship === "related") {
         return "#30302E";
       } else if (relationship === "undermining") {
-        return "#A63822";
+        // return "#A63822";
+        return "#FF3300";
       }
     };
 
@@ -86,49 +90,49 @@ angular.module('thesis.graph', [])
 
     // Set up the colour scale
     var colors = ["#418248", "#338C64", "#2A7574", "#356A8C", "#3E4B82", "#445082", "#49378C", "#5B2D75", "#8C3984", "#82414A"];
-
+    colors = ["#126782", "#15628C", "#124675", "#15468C", "#143582", "#131282", "#24148C", "#2B1075", "#43148C", "#4D1282"];
     // Set up the force layout
     var force = d3.layout.force()
-        .charge(-640)
-        .linkDistance(80)
-        .size([width, height]);
+      .charge(-240)
+      .linkDistance(80)
+      .size([width, height]);
 
     // Append a SVG to the body of the html page. Assign this SVG as an object to svg
     var svg = d3.select(".dThreeContainer").append("svg")
-        .attr("width", width)
-        .attr("height", height);
+      .attr("width", width)
+      .attr("height", height);
 
     // This involves using the tooltip library by labratrevenge. The tooltip here will give the name of the node but can easily be adapted to display any of the underlying data by modifying html attribute of the tip.
     // Set up tooltip
     var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function (d) {
-        return  d.topic + "";
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function (d) {
+      return  d.topic + "";
     });
     svg.call(tip);
 
     // Here we add the possibility of pinning a node a particular point. This is useful when exploring large networks. Drag a node to pin it down. Double click on a node to release it.
     var node_drag = d3.behavior.drag()
-        .on("dragstart", dragstart)
-        .on("drag", dragmove)
-        .on("dragend", dragend);
+      .on("dragstart", dragstart)
+      .on("drag", dragmove)
+      .on("dragend", dragend);
     function dragstart(d, i) {
         force.stop(); // stops the force auto positioning before you start dragging
     }
     function dragmove(d, i) {
-        d.px += d3.event.dx;
-        d.py += d3.event.dy;
-        d.x += d3.event.dx;
-        d.y += d3.event.dy;
+      d.px += d3.event.dx;
+      d.py += d3.event.dy;
+      d.x += d3.event.dx;
+      d.y += d3.event.dy;
     }
     function dragend(d, i) {
-        d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-        force.resume();
+      d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+      force.resume();
     }
     function releasenode(d) {
-        d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-        //force.resume();
+      d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+      //force.resume();
     }
 
     // d3.json("../../articles.json", function(error, graph) {
@@ -136,78 +140,78 @@ angular.module('thesis.graph', [])
 
       // Creates the graph data structure out of the json data
       force.nodes($scope.graph.nodes)
-          .links($scope.graph.links)
-          .start();
+        .links($scope.graph.links)
+        .start();
 
       // Create all the line svgs but without locations yet
       var link = svg.selectAll(".link")
-          .data($scope.graph.links)
-          .enter().append("line")
-          .attr("class", "link")
-          .style("stroke-width", 2)
-          .style("marker-end",  "url(#suit)") // Modified line 
-          .style("stroke", function(d) { 
-            return findColor(d.relationship); 
-          });
+        .data($scope.graph.links)
+        .enter().append("line")
+        .attr("class", "link")
+        .style("stroke-width", 2.2)
+        .style("marker-end",  "url(#suit)") // Modified line 
+        .style("stroke", function(d) { 
+          return findColor(d.relationship); 
+        });
 
       // Do the same with the circles for the nodes - no 
       var node = svg.selectAll(".node")
-          .data($scope.graph.nodes)
-          .enter().append("circle")
-          .attr("class", "node")
-          // .attr("r", 8)
-          .attr("r", function(d) { 
-            return 2 * d.popIdx + 5; 
-          })
-          .style("fill", function (d) {
-          return colors[d.ctrIdx - 1];
+        .data($scope.graph.nodes)
+        .enter().append("circle")
+        .attr("class", "node")
+        // .attr("r", 8)
+        .attr("r", function(d) { 
+          return 2 * d.popIdx + 7; 
+        })
+        .style("fill", function (d) {
+        return colors[d.ctrIdx - 1];
       })
-          // .call(force.drag)
-          .call(node_drag) //Added
-          .on('click', connectedNodes) //Added code 
-          .on('dblclick', releasenode)
-          .on('mouseover', tip.show) //Added
-          .on('mouseout', tip.hide) //Added 
-          // leads to article's page with right click
-          .on('contextmenu', function(d, i) {
-            d3.event.preventDefault();
-            window.location.href = d.url;
-          });
+        // .call(force.drag)
+        .call(node_drag) //Added
+        .on('click', connectedNodes) //Added code 
+        .on('dblclick', releasenode)
+        .on('mouseover', tip.show) //Added
+        .on('mouseout', tip.hide) //Added 
+        // leads to article's page with right click
+        .on('contextmenu', function(d, i) {
+          d3.event.preventDefault();
+          window.location.href = d.url;
+        });
 
       // Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
       force.on("tick", function () {
-          link.attr("x1", function (d) {
-              return d.source.x;
-          })
-              .attr("y1", function (d) {
-              return d.source.y;
-          })
-              .attr("x2", function (d) {
-              return d.target.x;
-          })
-              .attr("y2", function (d) {
-              return d.target.y;
-          });
+        link.attr("x1", function (d) {
+            return d.source.x;
+        })
+            .attr("y1", function (d) {
+            return d.source.y;
+        })
+            .attr("x2", function (d) {
+            return d.target.x;
+        })
+            .attr("y2", function (d) {
+            return d.target.y;
+        });
 
-          node.attr("cx", function (d) {
-              return d.x;
-          })
-              .attr("cy", function (d) {
-              return d.y;
-          });
+        node.attr("cx", function (d) {
+            return d.x;
+        })
+            .attr("cy", function (d) {
+            return d.y;
+        });
       });
 
 
       // When the graph is huge it's nice to have some search functionality. We can use some jquery to create an autocompleting search box so the first thing is to add references to the jquery-ui libraries.
       var optArray = [];
       for (var i = 0; i < $scope.graph.nodes.length - 1; i++) {
-          optArray.push($scope.graph.nodes[i].topic);
+        optArray.push($scope.graph.nodes[i].topic);
       }
       optArray = optArray.sort();
       $(function () {
-          $("#search").autocomplete({
-              source: optArray
-          });
+        $("#search").autocomplete({
+          source: optArray
+        });
       });
 
 
@@ -224,7 +228,7 @@ angular.module('thesis.graph', [])
           .attr("orient", "auto")
         .append("path")
           .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-          .style("stroke", "#30302E");
+          .style("stroke", "white");
           // .style("opacity", "0.6");
 
 
@@ -236,33 +240,33 @@ angular.module('thesis.graph', [])
       // Create an array logging what is connected to what
       var linkedByIndex = {};
       for (i = 0; i < $scope.graph.nodes.length; i++) {
-          linkedByIndex[i + "," + i] = 1;
+        linkedByIndex[i + "," + i] = 1;
       }
       $scope.graph.links.forEach(function (d) {
-          linkedByIndex[d.source.index + "," + d.target.index] = 1;
+        linkedByIndex[d.source.index + "," + d.target.index] = 1;
       });
       // This function looks up whether a pair are neighbours
       function neighboring(a, b) {
-          return linkedByIndex[a.index + "," + b.index];
+        return linkedByIndex[a.index + "," + b.index];
       }
       function connectedNodes() {
-          if (toggle === 0) {
-              //Reduce the opacity of all but the neighbouring nodes
-              d = d3.select(this).node().__data__;
-              node.style("opacity", function (o) {
-                  return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
-              });
-              link.style("opacity", function (o) {
-                  return d.index==o.source.index | d.index==o.target.index ? 1 : 0.1;
-              });
-              //Reduce the op
-              toggle = 1;
-          } else {
-              //Put them back to opacity=1
-              node.style("opacity", 1);
-              link.style("opacity", 1);
-              toggle = 0;
-          }
+        if (toggle === 0) {
+          //Reduce the opacity of all but the neighbouring nodes
+          d = d3.select(this).node().__data__;
+          node.style("opacity", function (o) {
+              return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+          });
+          link.style("opacity", function (o) {
+              return d.index==o.source.index | d.index==o.target.index ? 1 : 0.1;
+          });
+          //Reduce the op
+          toggle = 1;
+        } else {
+          //Put them back to opacity=1
+          node.style("opacity", 1);
+          link.style("opacity", 1);
+          toggle = 0;
+        }
       }
 
     // });
@@ -294,4 +298,72 @@ angular.module('thesis.graph', [])
   };
 
   // $scope.dthree();
+  $scope.legend = function() {
+    var data = [{
+        color: "#126782",
+        label: "1"
+      }, {
+        color: "#15628C",
+        label: '2'
+      }, {
+        color: "#124675",
+        label: "3"
+      }, {
+        color: "#15468C",
+        label: "4"
+      }, {
+        color: "#143582",
+        label: "Controversy"
+      }, {
+        color: "#131282",
+        label: "6"
+      }, {
+        color: "#24148C",
+        label: "7"
+      }, {
+        color: "#2B1075",
+        label: "8"
+      }, {
+        color: "#43148C",
+        label: "9"
+      }, {
+        color: "#4D1282",
+        label: "10"
+      }];
+
+    var width = 240;
+    var height = 50;
+
+    var svg = d3.select('.ctrLegend')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    var grad = svg.append('defs')
+      .append('linearGradient')
+      .attr('id', 'grad')
+      .attr('x1', '0%')
+      .attr('x2', '100%')
+      .attr('y1', '0%')
+      .attr('y2', '0%');
+
+    grad.selectAll('stop')
+      .data(data)
+      .enter()
+      .append('stop')
+      .attr('offset', function(d, i) {
+        return (i / data.length) * 100 + '%';
+      })
+      .style('stop-color', function(d) {
+        return d.color;
+      })
+      .style('stop-opacity', 0.9);
+
+    svg.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 240)
+      .attr('height', height / 2)
+      .attr('fill', 'url(#grad)');
+  };
 });
