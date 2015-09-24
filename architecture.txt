@@ -101,13 +101,6 @@ if data not stored yet
 display message
 
 
-404 
-UrlParser = require(url)
-parts = urlParser.parse(request.url)
-parts.pathname
-
-
-
 
 
 
