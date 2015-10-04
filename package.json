@@ -11,7 +11,7 @@
     "bower": "^1.5.2",
     "express": "~4.0.0",
     "jwt-simple": "^0.2.0",
-    "mongoose": "~3.6.13",
+    "mongoose": "^4.1.9",
     "morgan": "^1.1.1",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
