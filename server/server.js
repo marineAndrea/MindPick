@@ -4,7 +4,11 @@ var mongoose = require('mongoose');
 var app = express();
 
 // connects to database
-mongoose.connect('marine:marine@ds035723.mongolab.com:35723/articles');
+mongoose.connect('marine:marine@ds035723.mongolab.com:35723/articles', function(error) {
+  if (error) {
+    console.log('err', error);
+  }
+});
 
 // configure our server with all the middleware and and routing
 require('./config/middleware.js')(app, express);
@@ -13,4 +17,3 @@ require('./config/middleware.js')(app, express);
 // app.listen(8000);
 // console.log('listening on port ' + 8000);
 app.listen(process.env.PORT || 8000);
-
