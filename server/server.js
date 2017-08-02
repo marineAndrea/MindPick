@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 // connects to database
-mongoose.connect('marine:marine@ds035723.mongolab.com:35723/articles', function(error) {
+mongoose.connect(process.env.MONGO_LAB_CONNECTION_STRING, function(error) {
   if (error) {
     console.log('err', error);
   }
