@@ -1,6 +1,7 @@
 node_modules/
 client/lib/
 *.log
+.idea/
 
 build/
 dist/
